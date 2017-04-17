@@ -7,8 +7,15 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
+using System.Reflection;
+using System.Diagnostics;
+using System.Resources;
+using System.Threading;
+using System.Globalization;
+
 namespace QuoteTest
 {
+    
     public partial class Form1 : Form
     {
         public DataTable dt;
@@ -18,7 +25,15 @@ namespace QuoteTest
         }
 
         private System.Drawing.Graphics g;
-        private System.Drawing.Pen pen1 = new System.Drawing.Pen(Color.Blue, 2F);
+        private System.Drawing.Pen penBlue2 = new System.Drawing.Pen(Color.Blue, 2F);
+        private System.Drawing.Pen penGreen2 = new System.Drawing.Pen(Color.Green, 2F);
+        private System.Drawing.Pen penRed2 = new System.Drawing.Pen(Color.Red, 2F);
+
+        public static string minutes = "0", sec = "0";
+        public static int mhigh = 100000, mlow = 0, mopen = 0, mclose = 0;
+        public static string lastminutes = "0";
+        public static int lastprice = 0;
+        public static bool runK = false;
 
         //連線Event OnMktStatusChange (int Status, char* Msg)	與行情發送端連線的狀態,回傳LinkStatus 
         private void axYuantaQuote1_OnMktStatusChange(object sender, AxYuantaQuoteLib._DYuantaQuoteEvents_OnMktStatusChangeEvent e)
@@ -83,6 +98,63 @@ namespace QuoteTest
 
             ListShow(String.Format("{0} 買五：{1}-{2}", e.symbol, e.bestBuyPri, e.bestBuyQty));
             ListShow(String.Format("{0} 賣五：{1}-{2}", e.symbol, e.bestSellPri, e.bestSellQty));
+            draw_k(e);
+        }
+        
+        public void draw_k(AxYuantaQuoteLib._DYuantaQuoteEvents_OnGetMktAllEvent e)
+        {
+            int tmp = Int32.Parse(e.matchPri);
+            //判斷是否第一次記錄
+            if (!runK)
+            {
+                runK = true;
+                Debug.WriteLine("runK="+runK);
+                mhigh = tmp;
+                mlow = tmp;
+                mopen = tmp;
+                mclose = tmp;
+                minutes = e.matchTime.Substring(2, 2);
+                Debug.WriteLine(DateTime.Now.ToString("h:mm:ss tt")+"InitializeMinutes=" + minutes);
+                Debug.WriteLine(DateTime.Now.ToString("h:mm:ss tt")+
+                    "mhigh=" + mhigh + "_mlow=" + mlow + "_mopen=" + mopen + "_mclose=" + mclose);
+            }
+            //判斷是否新的一分鐘
+            if (String.Compare(e.matchTime.Substring(2, 2),minutes,true)!=0)
+            {
+                mclose = lastprice;
+                /*TODO:開始畫圖*/
+                Debug.WriteLine(DateTime.Now.ToString("h:mm:ss tt")+"Minutes=" + minutes);
+                Debug.WriteLine(DateTime.Now.ToString("h:mm:ss tt")+
+                    "mhigh=" + mhigh+"_mlow="+mlow+"_mopen="+mopen+"_mclose="+mclose);
+                //初始化該分鐘的資料
+                mhigh = tmp;
+                mlow = tmp;
+                mopen = tmp;
+                mclose = tmp;
+                minutes = e.matchTime.Substring(2, 2);
+                Debug.WriteLine(DateTime.Now.ToString("h:mm:ss tt")+"NewMinutes=" + minutes);
+                //MessageBox.Show("SetMktConnection失敗：" + mhigh);
+            }
+            //比較高低價
+            if (tmp > mhigh)
+            {
+                mhigh = tmp;
+                Debug.WriteLine(DateTime.Now.ToString("h:mm:ss tt")+"NewHigh=" + mhigh);
+            }
+            if (tmp < mlow)
+            {
+                mlow = tmp;
+                Debug.WriteLine(DateTime.Now.ToString("h:mm:ss tt")+"NewLow=" + mlow);
+            }
+            mclose = tmp;
+            lastprice = tmp;           
+
+             g = pictureBox1.CreateGraphics();
+            Size cs = pictureBox1.ClientSize;
+            //e.upPri, e.dnPri
+            g.DrawEllipse(penBlue2, 50, 100, 150, 200);
+            g.DrawLine(penBlue2, 50, 100, 150, 200);
+            //MessageBox.Show("SetMktConnection失敗：" + cs.Width);
         }
 
         private void button_login_Click(object sender, EventArgs e)
@@ -117,8 +189,6 @@ namespace QuoteTest
 
         private void button2_Click(object sender, EventArgs e)
         {
-            g = pictureBox1.CreateGraphics();
-            g.DrawEllipse(pen1, 50, 50, 100, 150);
             try
             {
                 int RegErrCode = axYuantaQuote1.DelMktReg(textBox_sym.Text.Trim());
