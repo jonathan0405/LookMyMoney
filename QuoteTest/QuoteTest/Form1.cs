@@ -25,15 +25,27 @@ namespace QuoteTest
         }
 
         private System.Drawing.Graphics g;
+        private System.Drawing.Pen penBlue1 = new System.Drawing.Pen(Color.Blue, 1F);
+        private System.Drawing.Pen penGreen1 = new System.Drawing.Pen(Color.Green, 1F);
+        private System.Drawing.Pen penRed1 = new System.Drawing.Pen(Color.Red, 1F);
         private System.Drawing.Pen penBlue2 = new System.Drawing.Pen(Color.Blue, 2F);
         private System.Drawing.Pen penGreen2 = new System.Drawing.Pen(Color.Green, 2F);
         private System.Drawing.Pen penRed2 = new System.Drawing.Pen(Color.Red, 2F);
+        SolidBrush blueBrush = new SolidBrush(Color.Blue);
+        SolidBrush greenBrush = new SolidBrush(Color.Green);
+        SolidBrush redBrush = new SolidBrush(Color.Red);
 
         public static string minutes = "0", sec = "0";
         public static int mhigh = 100000, mlow = 0, mopen = 0, mclose = 0;
         public static string lastminutes = "0";
         public static int lastprice = 0;
         public static bool runK = false;
+
+        List<float> popen = new List<float>();
+        List<float> pclose = new List<float>();
+        List<float> phigh = new List<float>();
+        List<float> plow = new List<float>();
+        List<long> pvol = new List<long>();
 
         //連線Event OnMktStatusChange (int Status, char* Msg)	與行情發送端連線的狀態,回傳LinkStatus 
         private void axYuantaQuote1_OnMktStatusChange(object sender, AxYuantaQuoteLib._DYuantaQuoteEvents_OnMktStatusChangeEvent e)
@@ -98,10 +110,10 @@ namespace QuoteTest
 
             ListShow(String.Format("{0} 買五：{1}-{2}", e.symbol, e.bestBuyPri, e.bestBuyQty));
             ListShow(String.Format("{0} 賣五：{1}-{2}", e.symbol, e.bestSellPri, e.bestSellQty));
-            draw_k(e);
+            cal_k(e);
         }
         
-        public void draw_k(AxYuantaQuoteLib._DYuantaQuoteEvents_OnGetMktAllEvent e)
+        public void cal_k(AxYuantaQuoteLib._DYuantaQuoteEvents_OnGetMktAllEvent e)
         {
             int tmp = Int32.Parse(e.matchPri);
             //判斷是否第一次記錄
@@ -114,17 +126,24 @@ namespace QuoteTest
                 mopen = tmp;
                 mclose = tmp;
                 minutes = e.matchTime.Substring(2, 2);
-                Debug.WriteLine(DateTime.Now.ToString("h:mm:ss tt")+"InitializeMinutes=" + minutes);
-                Debug.WriteLine(DateTime.Now.ToString("h:mm:ss tt")+
+                Debug.WriteLine(DateTime.Now.ToString("h:mm:ss ")+"InitializeMinutes=" + minutes);
+                Debug.WriteLine(DateTime.Now.ToString("h:mm:ss ")+
                     "mhigh=" + mhigh + "_mlow=" + mlow + "_mopen=" + mopen + "_mclose=" + mclose);
+                
+                draw_k();
             }
             //判斷是否新的一分鐘
             if (String.Compare(e.matchTime.Substring(2, 2),minutes,true)!=0)
             {
                 mclose = lastprice;
                 /*TODO:開始畫圖*/
-                Debug.WriteLine(DateTime.Now.ToString("h:mm:ss tt")+"Minutes=" + minutes);
-                Debug.WriteLine(DateTime.Now.ToString("h:mm:ss tt")+
+                popen.Add(mopen);
+                pclose.Add(mclose);
+                phigh.Add(mhigh);
+                plow.Add(mlow);
+                draw_k();
+                Debug.WriteLine(DateTime.Now.ToString("h:mm:ss ")+"Minutes=" + minutes);
+                Debug.WriteLine(DateTime.Now.ToString("h:mm:ss ")+
                     "mhigh=" + mhigh+"_mlow="+mlow+"_mopen="+mopen+"_mclose="+mclose);
                 //初始化該分鐘的資料
                 mhigh = tmp;
@@ -132,29 +151,98 @@ namespace QuoteTest
                 mopen = tmp;
                 mclose = tmp;
                 minutes = e.matchTime.Substring(2, 2);
-                Debug.WriteLine(DateTime.Now.ToString("h:mm:ss tt")+"NewMinutes=" + minutes);
+                Debug.WriteLine(DateTime.Now.ToString("h:mm:ss ")+"NewMinutes=" + minutes);
                 //MessageBox.Show("SetMktConnection失敗：" + mhigh);
             }
             //比較高低價
             if (tmp > mhigh)
             {
                 mhigh = tmp;
-                Debug.WriteLine(DateTime.Now.ToString("h:mm:ss tt")+"NewHigh=" + mhigh);
+                Debug.WriteLine(DateTime.Now.ToString("h:mm:ss ")+"NewHigh=" + mhigh);
             }
             if (tmp < mlow)
             {
                 mlow = tmp;
-                Debug.WriteLine(DateTime.Now.ToString("h:mm:ss tt")+"NewLow=" + mlow);
+                Debug.WriteLine(DateTime.Now.ToString("h:mm:ss ")+"NewLow=" + mlow);
             }
             mclose = tmp;
-            lastprice = tmp;           
-
-             g = pictureBox1.CreateGraphics();
-            Size cs = pictureBox1.ClientSize;
-            //e.upPri, e.dnPri
-            g.DrawEllipse(penBlue2, 50, 100, 150, 200);
-            g.DrawLine(penBlue2, 50, 100, 150, 200);
+            lastprice = tmp;
             //MessageBox.Show("SetMktConnection失敗：" + cs.Width);
+        }
+
+        public void draw_k()
+        {
+            g = pictureBox1.CreateGraphics();
+            Size cs = pictureBox1.ClientSize;
+            int scale = 1, shift = 0;
+            long trademax = 0;
+            float max = 0, min = 10000;
+            int kx = cs.Width - 10;
+
+            g.Clear(Color.Black);
+            //計算能畫幾條k棒
+            int amount = (cs.Width) / 10 / scale + 1;
+            //MessageBox.Show("NumberOfK:" + amount + "\nWidth:"+cs.Width+"\nHeight:"+cs.Height);
+            //計算最高最低價與最高成交量
+            for (int i = shift; i < pvol.Count; i++)
+            {
+                if (pvol[i] > trademax)
+                {
+                    trademax = pvol[i];
+                    Debug.WriteLine("UpdateNewTrade=" + trademax);
+                }
+            }
+
+            for (int i = shift; i < phigh.Count; i++)
+            {
+                if (phigh[i] > max)
+                {
+                    max = phigh[i];
+                    Debug.WriteLine("UpdateNewHigh=" + max);
+                }                    
+            }
+
+            for (int i = shift; i < plow.Count; i++)
+            {
+                if (plow[i] < min)
+                {
+                    min = plow[i];
+                    Debug.WriteLine("UpdateNewLow=" + min);
+                }                    
+            }
+            //繪製目前價格
+            for(int i = shift; i < popen.Count; i++)
+            {
+                int kxWidth = 5;
+                kx = kx - kxWidth * scale;
+                float highy = (cs.Height / (max - min)) * (max - phigh[i]);
+                float lowy = (cs.Height / (max - min)) * (max - plow[i]);
+                float openy = (cs.Height / (max - min)) * (max - popen[i]);
+                float closey = (cs.Height / (max - min)) * (max - pclose[i]);
+                Debug.WriteLine("yhigh" + highy);
+                Debug.WriteLine("ylow" + lowy);
+                Debug.WriteLine("yopen" + openy);
+                Debug.WriteLine("yclose" + closey);
+                // Create rectangle.
+                // Draw rectangle to screen.
+                Debug.WriteLine("kx" + kx);
+                
+                if (popen[i] > pclose[i])//跌
+                {
+                    Rectangle rect = new Rectangle(kx, (int)openy, kxWidth*2, (int)(closey - openy));
+                    g.DrawLine(penGreen2, kx+kxWidth, highy, kx + kxWidth, lowy);
+                    g.DrawRectangle(penGreen1, rect);
+                    g.FillRectangle(greenBrush, rect);
+                }
+                else//漲
+                {
+                    Rectangle rect = new Rectangle(kx, (int)closey, kxWidth*2, (int)(openy - closey));
+                    g.DrawLine(penRed2, kx + kxWidth, highy, kx + kxWidth, lowy);
+                    g.DrawRectangle(penRed1, rect);
+                    g.FillRectangle(redBrush, rect);
+                }
+                kx = kx - kxWidth * 2 - 2;
+            }
         }
 
         private void button_login_Click(object sender, EventArgs e)

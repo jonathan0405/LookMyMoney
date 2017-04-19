@@ -30,21 +30,21 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle46 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle47 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle58 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle59 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle60 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle48 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle49 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle50 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle51 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle52 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle53 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle54 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle55 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle56 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle57 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle13 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle14 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle15 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.textBox_pass = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
@@ -123,7 +123,7 @@
             this.groupBox3.Size = new System.Drawing.Size(419, 206);
             this.groupBox3.TabIndex = 15;
             this.groupBox3.TabStop = false;
-            this.groupBox3.Text = "Yuanta Quote API 連線資訊";
+            this.groupBox3.Text = "連線資訊";
             // 
             // textBox_pass
             // 
@@ -253,7 +253,7 @@
             this.groupBox1.Size = new System.Drawing.Size(439, 206);
             this.groupBox1.TabIndex = 16;
             this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Yuanta Quote API 商品訂閱資訊";
+            this.groupBox1.Text = "商品訂閱資訊";
             this.groupBox1.Enter += new System.EventHandler(this.groupBox1_Enter);
             // 
             // axYuantaQuote1
@@ -327,12 +327,13 @@
             // textBox_sym
             // 
             this.textBox_sym.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
+            this.textBox_sym.ForeColor = System.Drawing.SystemColors.WindowText;
             this.textBox_sym.Location = new System.Drawing.Point(126, 25);
             this.textBox_sym.Margin = new System.Windows.Forms.Padding(5);
             this.textBox_sym.Name = "textBox_sym";
             this.textBox_sym.Size = new System.Drawing.Size(294, 29);
             this.textBox_sym.TabIndex = 6;
-            this.textBox_sym.Text = "TXFJ4";
+            this.textBox_sym.Text = "TXFD7";
             this.textBox_sym.Click += new System.EventHandler(this.textBox_sym_Click);
             // 
             // label5
@@ -364,7 +365,7 @@
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Margin = new System.Windows.Forms.Padding(5);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1246, 206);
+            this.panel1.Size = new System.Drawing.Size(1797, 206);
             this.panel1.TabIndex = 18;
             // 
             // groupBox2
@@ -372,16 +373,16 @@
             this.groupBox2.Controls.Add(this.pictureBox1);
             this.groupBox2.Location = new System.Drawing.Point(848, 0);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(398, 206);
+            this.groupBox2.Size = new System.Drawing.Size(949, 206);
             this.groupBox2.TabIndex = 17;
             this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "groupBox2";
+            this.groupBox2.Text = "K線圖";
             // 
             // pictureBox1
             // 
             this.pictureBox1.Location = new System.Drawing.Point(7, 16);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(385, 184);
+            this.pictureBox1.Size = new System.Drawing.Size(936, 184);
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
             this.pictureBox1.Click += new System.EventHandler(this.pictureBox1_Click);
@@ -392,20 +393,20 @@
             this.DataGrid.AllowUserToDeleteRows = false;
             this.DataGrid.AllowUserToResizeColumns = false;
             this.DataGrid.AllowUserToResizeRows = false;
-            dataGridViewCellStyle46.Font = new System.Drawing.Font("微軟正黑體", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.DataGrid.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle46;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("微軟正黑體", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.DataGrid.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
             this.DataGrid.AutoGenerateColumns = false;
             this.DataGrid.BackgroundColor = System.Drawing.Color.Black;
             this.DataGrid.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.DataGrid.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
-            dataGridViewCellStyle47.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle47.BackColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle47.Font = new System.Drawing.Font("微軟正黑體", 12F);
-            dataGridViewCellStyle47.ForeColor = System.Drawing.Color.Yellow;
-            dataGridViewCellStyle47.SelectionBackColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle47.SelectionForeColor = System.Drawing.Color.Yellow;
-            dataGridViewCellStyle47.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.DataGrid.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle47;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle2.BackColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("微軟正黑體", 12F);
+            dataGridViewCellStyle2.ForeColor = System.Drawing.Color.Yellow;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.Yellow;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.DataGrid.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
             this.DataGrid.ColumnHeadersHeight = 30;
             this.DataGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             this.DataGrid.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
@@ -421,14 +422,14 @@
             this.MatchQty,
             this.TolMatchQty});
             this.DataGrid.DataSource = this.bindingSource1;
-            dataGridViewCellStyle58.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle58.BackColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle58.Font = new System.Drawing.Font("微軟正黑體", 12F);
-            dataGridViewCellStyle58.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle58.SelectionBackColor = System.Drawing.Color.Transparent;
-            dataGridViewCellStyle58.SelectionForeColor = System.Drawing.Color.WhiteSmoke;
-            dataGridViewCellStyle58.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.DataGrid.DefaultCellStyle = dataGridViewCellStyle58;
+            dataGridViewCellStyle13.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle13.BackColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle13.Font = new System.Drawing.Font("微軟正黑體", 12F);
+            dataGridViewCellStyle13.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle13.SelectionBackColor = System.Drawing.Color.Transparent;
+            dataGridViewCellStyle13.SelectionForeColor = System.Drawing.Color.WhiteSmoke;
+            dataGridViewCellStyle13.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.DataGrid.DefaultCellStyle = dataGridViewCellStyle13;
             this.DataGrid.Dock = System.Windows.Forms.DockStyle.Fill;
             this.DataGrid.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
             this.DataGrid.EnableHeadersVisualStyles = false;
@@ -439,26 +440,26 @@
             this.DataGrid.Name = "DataGrid";
             this.DataGrid.ReadOnly = true;
             this.DataGrid.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
-            dataGridViewCellStyle59.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle59.BackColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle59.Font = new System.Drawing.Font("微軟正黑體", 12F);
-            dataGridViewCellStyle59.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle59.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle59.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle59.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.DataGrid.RowHeadersDefaultCellStyle = dataGridViewCellStyle59;
+            dataGridViewCellStyle14.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle14.BackColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle14.Font = new System.Drawing.Font("微軟正黑體", 12F);
+            dataGridViewCellStyle14.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle14.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle14.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle14.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.DataGrid.RowHeadersDefaultCellStyle = dataGridViewCellStyle14;
             this.DataGrid.RowHeadersVisible = false;
-            dataGridViewCellStyle60.BackColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle60.Font = new System.Drawing.Font("微軟正黑體", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            dataGridViewCellStyle60.ForeColor = System.Drawing.Color.White;
-            this.DataGrid.RowsDefaultCellStyle = dataGridViewCellStyle60;
+            dataGridViewCellStyle15.BackColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle15.Font = new System.Drawing.Font("微軟正黑體", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            dataGridViewCellStyle15.ForeColor = System.Drawing.Color.White;
+            this.DataGrid.RowsDefaultCellStyle = dataGridViewCellStyle15;
             this.DataGrid.RowTemplate.DefaultCellStyle.Font = new System.Drawing.Font("微軟正黑體", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
             this.DataGrid.RowTemplate.Height = 24;
             this.DataGrid.ShowCellErrors = false;
             this.DataGrid.ShowCellToolTips = false;
             this.DataGrid.ShowEditingIcon = false;
             this.DataGrid.ShowRowErrors = false;
-            this.DataGrid.Size = new System.Drawing.Size(1246, 317);
+            this.DataGrid.Size = new System.Drawing.Size(1797, 415);
             this.DataGrid.TabIndex = 9;
             this.DataGrid.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DataGrid_CellContentClick);
             this.DataGrid.CellPainting += new System.Windows.Forms.DataGridViewCellPaintingEventHandler(this.DataGrid_CellPainting);
@@ -475,8 +476,8 @@
             // RefPri
             // 
             this.RefPri.DataPropertyName = "參考價";
-            dataGridViewCellStyle48.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            this.RefPri.DefaultCellStyle = dataGridViewCellStyle48;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            this.RefPri.DefaultCellStyle = dataGridViewCellStyle3;
             this.RefPri.HeaderText = "參考價";
             this.RefPri.Name = "RefPri";
             this.RefPri.ReadOnly = true;
@@ -485,8 +486,8 @@
             // OpenPri
             // 
             this.OpenPri.DataPropertyName = "開盤價";
-            dataGridViewCellStyle49.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            this.OpenPri.DefaultCellStyle = dataGridViewCellStyle49;
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            this.OpenPri.DefaultCellStyle = dataGridViewCellStyle4;
             this.OpenPri.HeaderText = "開盤價";
             this.OpenPri.Name = "OpenPri";
             this.OpenPri.ReadOnly = true;
@@ -495,8 +496,8 @@
             // HighPri
             // 
             this.HighPri.DataPropertyName = "最高價";
-            dataGridViewCellStyle50.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            this.HighPri.DefaultCellStyle = dataGridViewCellStyle50;
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            this.HighPri.DefaultCellStyle = dataGridViewCellStyle5;
             this.HighPri.HeaderText = "最高價";
             this.HighPri.Name = "HighPri";
             this.HighPri.ReadOnly = true;
@@ -504,8 +505,8 @@
             // LowPri
             // 
             this.LowPri.DataPropertyName = "最低價";
-            dataGridViewCellStyle51.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            this.LowPri.DefaultCellStyle = dataGridViewCellStyle51;
+            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            this.LowPri.DefaultCellStyle = dataGridViewCellStyle6;
             this.LowPri.HeaderText = "最低價";
             this.LowPri.Name = "LowPri";
             this.LowPri.ReadOnly = true;
@@ -513,8 +514,8 @@
             // UpPri
             // 
             this.UpPri.DataPropertyName = "漲停價";
-            dataGridViewCellStyle52.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            this.UpPri.DefaultCellStyle = dataGridViewCellStyle52;
+            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            this.UpPri.DefaultCellStyle = dataGridViewCellStyle7;
             this.UpPri.HeaderText = "漲停價";
             this.UpPri.Name = "UpPri";
             this.UpPri.ReadOnly = true;
@@ -522,8 +523,8 @@
             // DnPri
             // 
             this.DnPri.DataPropertyName = "跌停價";
-            dataGridViewCellStyle53.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            this.DnPri.DefaultCellStyle = dataGridViewCellStyle53;
+            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            this.DnPri.DefaultCellStyle = dataGridViewCellStyle8;
             this.DnPri.HeaderText = "跌停價";
             this.DnPri.Name = "DnPri";
             this.DnPri.ReadOnly = true;
@@ -531,8 +532,8 @@
             // MatchTim
             // 
             this.MatchTim.DataPropertyName = "成交時間";
-            dataGridViewCellStyle54.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.MatchTim.DefaultCellStyle = dataGridViewCellStyle54;
+            dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.MatchTim.DefaultCellStyle = dataGridViewCellStyle9;
             this.MatchTim.HeaderText = "成交時間";
             this.MatchTim.Name = "MatchTim";
             this.MatchTim.ReadOnly = true;
@@ -541,8 +542,8 @@
             // MatchPri
             // 
             this.MatchPri.DataPropertyName = "成交價位";
-            dataGridViewCellStyle55.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            this.MatchPri.DefaultCellStyle = dataGridViewCellStyle55;
+            dataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            this.MatchPri.DefaultCellStyle = dataGridViewCellStyle10;
             this.MatchPri.HeaderText = "成交價位";
             this.MatchPri.Name = "MatchPri";
             this.MatchPri.ReadOnly = true;
@@ -550,8 +551,8 @@
             // MatchQty
             // 
             this.MatchQty.DataPropertyName = "成交數量";
-            dataGridViewCellStyle56.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            this.MatchQty.DefaultCellStyle = dataGridViewCellStyle56;
+            dataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            this.MatchQty.DefaultCellStyle = dataGridViewCellStyle11;
             this.MatchQty.HeaderText = "成交數量";
             this.MatchQty.Name = "MatchQty";
             this.MatchQty.ReadOnly = true;
@@ -559,8 +560,8 @@
             // TolMatchQty
             // 
             this.TolMatchQty.DataPropertyName = "總成交量";
-            dataGridViewCellStyle57.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            this.TolMatchQty.DefaultCellStyle = dataGridViewCellStyle57;
+            dataGridViewCellStyle12.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            this.TolMatchQty.DefaultCellStyle = dataGridViewCellStyle12;
             this.TolMatchQty.HeaderText = "總成交量";
             this.TolMatchQty.Name = "TolMatchQty";
             this.TolMatchQty.ReadOnly = true;
@@ -578,10 +579,10 @@
             this.toolStripStatusLabel1,
             this.toolStripStatusLabel3,
             this.toolStripStatusLabel2});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 667);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 765);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Padding = new System.Windows.Forms.Padding(2, 0, 40, 0);
-            this.statusStrip1.Size = new System.Drawing.Size(1246, 22);
+            this.statusStrip1.Size = new System.Drawing.Size(1797, 22);
             this.statusStrip1.TabIndex = 19;
             this.statusStrip1.Click += new System.EventHandler(this.statusStrip1_Click);
             this.statusStrip1.DoubleClick += new System.EventHandler(this.statusStrip1_DoubleClick);
@@ -600,7 +601,7 @@
             this.toolStripStatusLabel3.Font = new System.Drawing.Font("微軟正黑體", 12F);
             this.toolStripStatusLabel3.ForeColor = System.Drawing.Color.Yellow;
             this.toolStripStatusLabel3.Name = "toolStripStatusLabel3";
-            this.toolStripStatusLabel3.Size = new System.Drawing.Size(1173, 17);
+            this.toolStripStatusLabel3.Size = new System.Drawing.Size(1755, 17);
             this.toolStripStatusLabel3.Spring = true;
             this.toolStripStatusLabel3.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.toolStripStatusLabel3.Click += new System.EventHandler(this.toolStripStatusLabel3_Click);
@@ -620,11 +621,11 @@
             this.listBox1.Font = new System.Drawing.Font("微軟正黑體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
             this.listBox1.ForeColor = System.Drawing.Color.Yellow;
             this.listBox1.ItemHeight = 20;
-            this.listBox1.Location = new System.Drawing.Point(0, 523);
+            this.listBox1.Location = new System.Drawing.Point(0, 621);
             this.listBox1.Margin = new System.Windows.Forms.Padding(5, 7, 5, 7);
             this.listBox1.Name = "listBox1";
             this.listBox1.ScrollAlwaysVisible = true;
-            this.listBox1.Size = new System.Drawing.Size(1246, 144);
+            this.listBox1.Size = new System.Drawing.Size(1797, 144);
             this.listBox1.TabIndex = 20;
             this.listBox1.SelectedIndexChanged += new System.EventHandler(this.listBox1_SelectedIndexChanged);
             // 
@@ -640,7 +641,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1246, 689);
+            this.ClientSize = new System.Drawing.Size(1797, 787);
             this.Controls.Add(this.DataGrid);
             this.Controls.Add(this.listBox1);
             this.Controls.Add(this.statusStrip1);
@@ -650,7 +651,7 @@
             this.MaximizeBox = false;
             this.Name = "Form1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = " # # # # # 行 情 A P I  # # # # # ";
+            this.Text = "第二組賺大錢";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
