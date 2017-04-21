@@ -1,8 +1,8 @@
-/Logs/
-/packages/
-/.vs/
-/bin/
-/obj/
+/QuoteTest/Logs/
+/QuoteTest/packages/
+/QuoteTest/.vs/
+/QuoteTest/QuoteTest/bin/
+/QuoteTest/QuoteTest/obj/
 
 
 # Windows image file caches
