@@ -30,13 +30,11 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle16 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle17 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle28 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle29 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle30 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle18 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle19 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle32 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle33 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle34 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle20 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle21 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle22 = new System.Windows.Forms.DataGridViewCellStyle();
@@ -45,6 +43,10 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle25 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle26 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle27 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle28 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle29 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle30 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle31 = new System.Windows.Forms.DataGridViewCellStyle();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.textBox_pass = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
@@ -72,17 +74,6 @@
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.DataGrid = new System.Windows.Forms.DataGridView();
-            this.key = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.RefPri = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.OpenPri = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.HighPri = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.LowPri = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.UpPri = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.DnPri = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.MatchTim = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.MatchPri = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.MatchQty = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.TolMatchQty = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.bindingSource1 = new System.Windows.Forms.BindingSource(this.components);
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
@@ -95,6 +86,19 @@
             this.btn_Load = new System.Windows.Forms.Button();
             this.btn_Writefile = new System.Windows.Forms.Button();
             this.timer_cal = new System.Windows.Forms.Timer(this.components);
+            this.key = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.RefPri = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.OpenPri = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.HighPri = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.LowPri = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.UpPri = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.DnPri = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.MatchTim = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.MatchPri = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.MatchQty = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.TolMatchQty = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Col14 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Col15 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.groupBox3.SuspendLayout();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.axYuantaQuote1)).BeginInit();
@@ -369,12 +373,14 @@
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Margin = new System.Windows.Forms.Padding(5);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1284, 206);
+            this.panel1.Size = new System.Drawing.Size(1276, 206);
             this.panel1.TabIndex = 18;
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.btn_Writefile);
             this.groupBox2.Controls.Add(this.groupBox4);
+            this.groupBox2.Controls.Add(this.btn_Load);
             this.groupBox2.Controls.Add(this.pictureBox1);
             this.groupBox2.Location = new System.Drawing.Point(848, 0);
             this.groupBox2.Name = "groupBox2";
@@ -407,20 +413,20 @@
             this.DataGrid.AllowUserToDeleteRows = false;
             this.DataGrid.AllowUserToResizeColumns = false;
             this.DataGrid.AllowUserToResizeRows = false;
-            dataGridViewCellStyle16.Font = new System.Drawing.Font("微軟正黑體", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.DataGrid.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle16;
+            dataGridViewCellStyle18.Font = new System.Drawing.Font("微軟正黑體", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.DataGrid.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle18;
             this.DataGrid.AutoGenerateColumns = false;
             this.DataGrid.BackgroundColor = System.Drawing.Color.Black;
             this.DataGrid.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.DataGrid.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
-            dataGridViewCellStyle17.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle17.BackColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle17.Font = new System.Drawing.Font("微軟正黑體", 12F);
-            dataGridViewCellStyle17.ForeColor = System.Drawing.Color.Yellow;
-            dataGridViewCellStyle17.SelectionBackColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle17.SelectionForeColor = System.Drawing.Color.Yellow;
-            dataGridViewCellStyle17.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.DataGrid.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle17;
+            dataGridViewCellStyle19.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle19.BackColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle19.Font = new System.Drawing.Font("微軟正黑體", 12F);
+            dataGridViewCellStyle19.ForeColor = System.Drawing.Color.Yellow;
+            dataGridViewCellStyle19.SelectionBackColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle19.SelectionForeColor = System.Drawing.Color.Yellow;
+            dataGridViewCellStyle19.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.DataGrid.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle19;
             this.DataGrid.ColumnHeadersHeight = 30;
             this.DataGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             this.DataGrid.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
@@ -434,16 +440,18 @@
             this.MatchTim,
             this.MatchPri,
             this.MatchQty,
-            this.TolMatchQty});
+            this.TolMatchQty,
+            this.Col14,
+            this.Col15});
             this.DataGrid.DataSource = this.bindingSource1;
-            dataGridViewCellStyle28.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle28.BackColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle28.Font = new System.Drawing.Font("微軟正黑體", 12F);
-            dataGridViewCellStyle28.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle28.SelectionBackColor = System.Drawing.Color.Transparent;
-            dataGridViewCellStyle28.SelectionForeColor = System.Drawing.Color.WhiteSmoke;
-            dataGridViewCellStyle28.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.DataGrid.DefaultCellStyle = dataGridViewCellStyle28;
+            dataGridViewCellStyle32.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle32.BackColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle32.Font = new System.Drawing.Font("微軟正黑體", 12F);
+            dataGridViewCellStyle32.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle32.SelectionBackColor = System.Drawing.Color.Transparent;
+            dataGridViewCellStyle32.SelectionForeColor = System.Drawing.Color.WhiteSmoke;
+            dataGridViewCellStyle32.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.DataGrid.DefaultCellStyle = dataGridViewCellStyle32;
             this.DataGrid.Dock = System.Windows.Forms.DockStyle.Fill;
             this.DataGrid.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
             this.DataGrid.EnableHeadersVisualStyles = false;
@@ -454,131 +462,33 @@
             this.DataGrid.Name = "DataGrid";
             this.DataGrid.ReadOnly = true;
             this.DataGrid.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
-            dataGridViewCellStyle29.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle29.BackColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle29.Font = new System.Drawing.Font("微軟正黑體", 12F);
-            dataGridViewCellStyle29.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle29.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle29.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle29.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.DataGrid.RowHeadersDefaultCellStyle = dataGridViewCellStyle29;
+            dataGridViewCellStyle33.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle33.BackColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle33.Font = new System.Drawing.Font("微軟正黑體", 12F);
+            dataGridViewCellStyle33.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle33.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle33.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle33.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.DataGrid.RowHeadersDefaultCellStyle = dataGridViewCellStyle33;
             this.DataGrid.RowHeadersVisible = false;
-            dataGridViewCellStyle30.BackColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle30.Font = new System.Drawing.Font("微軟正黑體", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            dataGridViewCellStyle30.ForeColor = System.Drawing.Color.White;
-            this.DataGrid.RowsDefaultCellStyle = dataGridViewCellStyle30;
+            dataGridViewCellStyle34.BackColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle34.Font = new System.Drawing.Font("微軟正黑體", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            dataGridViewCellStyle34.ForeColor = System.Drawing.Color.White;
+            this.DataGrid.RowsDefaultCellStyle = dataGridViewCellStyle34;
             this.DataGrid.RowTemplate.DefaultCellStyle.Font = new System.Drawing.Font("微軟正黑體", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
             this.DataGrid.RowTemplate.Height = 24;
             this.DataGrid.ShowCellErrors = false;
             this.DataGrid.ShowCellToolTips = false;
             this.DataGrid.ShowEditingIcon = false;
             this.DataGrid.ShowRowErrors = false;
-            this.DataGrid.Size = new System.Drawing.Size(1284, 539);
+            this.DataGrid.Size = new System.Drawing.Size(1276, 539);
             this.DataGrid.TabIndex = 9;
             this.DataGrid.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DataGrid_CellContentClick);
             this.DataGrid.CellPainting += new System.Windows.Forms.DataGridViewCellPaintingEventHandler(this.DataGrid_CellPainting);
             // 
-            // key
+            // bindingSource1
             // 
-            this.key.DataPropertyName = "商品代碼";
-            this.key.Frozen = true;
-            this.key.HeaderText = "商品代碼";
-            this.key.Name = "key";
-            this.key.ReadOnly = true;
-            this.key.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            // 
-            // RefPri
-            // 
-            this.RefPri.DataPropertyName = "參考價";
-            dataGridViewCellStyle18.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            this.RefPri.DefaultCellStyle = dataGridViewCellStyle18;
-            this.RefPri.HeaderText = "參考價";
-            this.RefPri.Name = "RefPri";
-            this.RefPri.ReadOnly = true;
-            this.RefPri.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            // 
-            // OpenPri
-            // 
-            this.OpenPri.DataPropertyName = "開盤價";
-            dataGridViewCellStyle19.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            this.OpenPri.DefaultCellStyle = dataGridViewCellStyle19;
-            this.OpenPri.HeaderText = "開盤價";
-            this.OpenPri.Name = "OpenPri";
-            this.OpenPri.ReadOnly = true;
-            this.OpenPri.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            // 
-            // HighPri
-            // 
-            this.HighPri.DataPropertyName = "最高價";
-            dataGridViewCellStyle20.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            this.HighPri.DefaultCellStyle = dataGridViewCellStyle20;
-            this.HighPri.HeaderText = "最高價";
-            this.HighPri.Name = "HighPri";
-            this.HighPri.ReadOnly = true;
-            // 
-            // LowPri
-            // 
-            this.LowPri.DataPropertyName = "最低價";
-            dataGridViewCellStyle21.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            this.LowPri.DefaultCellStyle = dataGridViewCellStyle21;
-            this.LowPri.HeaderText = "最低價";
-            this.LowPri.Name = "LowPri";
-            this.LowPri.ReadOnly = true;
-            // 
-            // UpPri
-            // 
-            this.UpPri.DataPropertyName = "漲停價";
-            dataGridViewCellStyle22.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            this.UpPri.DefaultCellStyle = dataGridViewCellStyle22;
-            this.UpPri.HeaderText = "漲停價";
-            this.UpPri.Name = "UpPri";
-            this.UpPri.ReadOnly = true;
-            // 
-            // DnPri
-            // 
-            this.DnPri.DataPropertyName = "跌停價";
-            dataGridViewCellStyle23.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            this.DnPri.DefaultCellStyle = dataGridViewCellStyle23;
-            this.DnPri.HeaderText = "跌停價";
-            this.DnPri.Name = "DnPri";
-            this.DnPri.ReadOnly = true;
-            // 
-            // MatchTim
-            // 
-            this.MatchTim.DataPropertyName = "成交時間";
-            dataGridViewCellStyle24.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.MatchTim.DefaultCellStyle = dataGridViewCellStyle24;
-            this.MatchTim.HeaderText = "成交時間";
-            this.MatchTim.Name = "MatchTim";
-            this.MatchTim.ReadOnly = true;
-            this.MatchTim.Width = 120;
-            // 
-            // MatchPri
-            // 
-            this.MatchPri.DataPropertyName = "成交價位";
-            dataGridViewCellStyle25.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            this.MatchPri.DefaultCellStyle = dataGridViewCellStyle25;
-            this.MatchPri.HeaderText = "成交價位";
-            this.MatchPri.Name = "MatchPri";
-            this.MatchPri.ReadOnly = true;
-            // 
-            // MatchQty
-            // 
-            this.MatchQty.DataPropertyName = "成交數量";
-            dataGridViewCellStyle26.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            this.MatchQty.DefaultCellStyle = dataGridViewCellStyle26;
-            this.MatchQty.HeaderText = "成交數量";
-            this.MatchQty.Name = "MatchQty";
-            this.MatchQty.ReadOnly = true;
-            // 
-            // TolMatchQty
-            // 
-            this.TolMatchQty.DataPropertyName = "總成交量";
-            dataGridViewCellStyle27.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            this.TolMatchQty.DefaultCellStyle = dataGridViewCellStyle27;
-            this.TolMatchQty.HeaderText = "總成交量";
-            this.TolMatchQty.Name = "TolMatchQty";
-            this.TolMatchQty.ReadOnly = true;
+            this.bindingSource1.CurrentChanged += new System.EventHandler(this.bindingSource1_CurrentChanged);
             // 
             // timer1
             // 
@@ -596,7 +506,7 @@
             this.statusStrip1.Location = new System.Drawing.Point(0, 889);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Padding = new System.Windows.Forms.Padding(2, 0, 40, 0);
-            this.statusStrip1.Size = new System.Drawing.Size(1284, 22);
+            this.statusStrip1.Size = new System.Drawing.Size(1276, 22);
             this.statusStrip1.TabIndex = 19;
             this.statusStrip1.Click += new System.EventHandler(this.statusStrip1_Click);
             this.statusStrip1.DoubleClick += new System.EventHandler(this.statusStrip1_DoubleClick);
@@ -615,7 +525,7 @@
             this.toolStripStatusLabel3.Font = new System.Drawing.Font("微軟正黑體", 12F);
             this.toolStripStatusLabel3.ForeColor = System.Drawing.Color.Yellow;
             this.toolStripStatusLabel3.Name = "toolStripStatusLabel3";
-            this.toolStripStatusLabel3.Size = new System.Drawing.Size(1242, 17);
+            this.toolStripStatusLabel3.Size = new System.Drawing.Size(1234, 17);
             this.toolStripStatusLabel3.Spring = true;
             this.toolStripStatusLabel3.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.toolStripStatusLabel3.Click += new System.EventHandler(this.toolStripStatusLabel3_Click);
@@ -639,7 +549,7 @@
             this.listBox1.Margin = new System.Windows.Forms.Padding(5, 7, 5, 7);
             this.listBox1.Name = "listBox1";
             this.listBox1.ScrollAlwaysVisible = true;
-            this.listBox1.Size = new System.Drawing.Size(1284, 144);
+            this.listBox1.Size = new System.Drawing.Size(1276, 144);
             this.listBox1.TabIndex = 20;
             this.listBox1.SelectedIndexChanged += new System.EventHandler(this.listBox1_SelectedIndexChanged);
             // 
@@ -653,7 +563,7 @@
             // 
             // btn_Load
             // 
-            this.btn_Load.Location = new System.Drawing.Point(1128, 213);
+            this.btn_Load.Location = new System.Drawing.Point(18, 25);
             this.btn_Load.Name = "btn_Load";
             this.btn_Load.Size = new System.Drawing.Size(127, 54);
             this.btn_Load.TabIndex = 21;
@@ -663,7 +573,7 @@
             // 
             // btn_Writefile
             // 
-            this.btn_Writefile.Location = new System.Drawing.Point(1128, 274);
+            this.btn_Writefile.Location = new System.Drawing.Point(18, 85);
             this.btn_Writefile.Name = "btn_Writefile";
             this.btn_Writefile.Size = new System.Drawing.Size(127, 60);
             this.btn_Writefile.TabIndex = 22;
@@ -675,13 +585,131 @@
             // 
             this.timer_cal.Interval = 3000;
             // 
+            // key
+            // 
+            this.key.DataPropertyName = "商品代碼";
+            this.key.Frozen = true;
+            this.key.HeaderText = "商品代碼";
+            this.key.Name = "key";
+            this.key.ReadOnly = true;
+            this.key.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
+            // RefPri
+            // 
+            this.RefPri.DataPropertyName = "參考價";
+            dataGridViewCellStyle20.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            this.RefPri.DefaultCellStyle = dataGridViewCellStyle20;
+            this.RefPri.HeaderText = "參考價";
+            this.RefPri.Name = "RefPri";
+            this.RefPri.ReadOnly = true;
+            this.RefPri.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
+            // OpenPri
+            // 
+            this.OpenPri.DataPropertyName = "開盤價";
+            dataGridViewCellStyle21.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            this.OpenPri.DefaultCellStyle = dataGridViewCellStyle21;
+            this.OpenPri.HeaderText = "開盤價";
+            this.OpenPri.Name = "OpenPri";
+            this.OpenPri.ReadOnly = true;
+            this.OpenPri.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
+            // HighPri
+            // 
+            this.HighPri.DataPropertyName = "最高價";
+            dataGridViewCellStyle22.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            this.HighPri.DefaultCellStyle = dataGridViewCellStyle22;
+            this.HighPri.HeaderText = "最高價";
+            this.HighPri.Name = "HighPri";
+            this.HighPri.ReadOnly = true;
+            // 
+            // LowPri
+            // 
+            this.LowPri.DataPropertyName = "最低價";
+            dataGridViewCellStyle23.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            this.LowPri.DefaultCellStyle = dataGridViewCellStyle23;
+            this.LowPri.HeaderText = "最低價";
+            this.LowPri.Name = "LowPri";
+            this.LowPri.ReadOnly = true;
+            // 
+            // UpPri
+            // 
+            this.UpPri.DataPropertyName = "漲停價";
+            dataGridViewCellStyle24.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            this.UpPri.DefaultCellStyle = dataGridViewCellStyle24;
+            this.UpPri.HeaderText = "漲停價";
+            this.UpPri.Name = "UpPri";
+            this.UpPri.ReadOnly = true;
+            // 
+            // DnPri
+            // 
+            this.DnPri.DataPropertyName = "跌停價";
+            dataGridViewCellStyle25.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            this.DnPri.DefaultCellStyle = dataGridViewCellStyle25;
+            this.DnPri.HeaderText = "跌停價";
+            this.DnPri.Name = "DnPri";
+            this.DnPri.ReadOnly = true;
+            // 
+            // MatchTim
+            // 
+            this.MatchTim.DataPropertyName = "成交時間";
+            dataGridViewCellStyle26.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.MatchTim.DefaultCellStyle = dataGridViewCellStyle26;
+            this.MatchTim.HeaderText = "成交時間";
+            this.MatchTim.Name = "MatchTim";
+            this.MatchTim.ReadOnly = true;
+            this.MatchTim.Width = 120;
+            // 
+            // MatchPri
+            // 
+            this.MatchPri.DataPropertyName = "成交價位";
+            dataGridViewCellStyle27.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            this.MatchPri.DefaultCellStyle = dataGridViewCellStyle27;
+            this.MatchPri.HeaderText = "成交價位";
+            this.MatchPri.Name = "MatchPri";
+            this.MatchPri.ReadOnly = true;
+            // 
+            // MatchQty
+            // 
+            this.MatchQty.DataPropertyName = "成交數量";
+            dataGridViewCellStyle28.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            this.MatchQty.DefaultCellStyle = dataGridViewCellStyle28;
+            this.MatchQty.HeaderText = "成交數量";
+            this.MatchQty.Name = "MatchQty";
+            this.MatchQty.ReadOnly = true;
+            // 
+            // TolMatchQty
+            // 
+            this.TolMatchQty.DataPropertyName = "總成交量";
+            dataGridViewCellStyle29.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            this.TolMatchQty.DefaultCellStyle = dataGridViewCellStyle29;
+            this.TolMatchQty.HeaderText = "總成交量";
+            this.TolMatchQty.Name = "TolMatchQty";
+            this.TolMatchQty.ReadOnly = true;
+            // 
+            // Col14
+            // 
+            this.Col14.DataPropertyName = "買賣力道";
+            dataGridViewCellStyle30.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            this.Col14.DefaultCellStyle = dataGridViewCellStyle30;
+            this.Col14.HeaderText = "買賣力道";
+            this.Col14.Name = "Col14";
+            this.Col14.ReadOnly = true;
+            // 
+            // Col15
+            // 
+            this.Col15.DataPropertyName = "權重";
+            dataGridViewCellStyle31.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            this.Col15.DefaultCellStyle = dataGridViewCellStyle31;
+            this.Col15.HeaderText = "權重";
+            this.Col15.Name = "Col15";
+            this.Col15.ReadOnly = true;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1284, 911);
-            this.Controls.Add(this.btn_Writefile);
-            this.Controls.Add(this.btn_Load);
+            this.ClientSize = new System.Drawing.Size(1276, 911);
             this.Controls.Add(this.DataGrid);
             this.Controls.Add(this.listBox1);
             this.Controls.Add(this.statusStrip1);
@@ -742,6 +770,15 @@
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel3;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel2;
         private AxYuantaQuoteLib.AxYuantaQuote axYuantaQuote1;
+        private System.Windows.Forms.ListBox listBox1;
+        private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog1;
+        private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.OpenFileDialog openFileDialog1;
+        private System.Windows.Forms.GroupBox groupBox4;
+        private System.Windows.Forms.Button btn_Load;
+        private System.Windows.Forms.Button btn_Writefile;
+        private System.Windows.Forms.Timer timer_cal;
         private System.Windows.Forms.DataGridViewTextBoxColumn key;
         private System.Windows.Forms.DataGridViewTextBoxColumn RefPri;
         private System.Windows.Forms.DataGridViewTextBoxColumn OpenPri;
@@ -753,15 +790,8 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn MatchPri;
         private System.Windows.Forms.DataGridViewTextBoxColumn MatchQty;
         private System.Windows.Forms.DataGridViewTextBoxColumn TolMatchQty;
-        private System.Windows.Forms.ListBox listBox1;
-        private System.Windows.Forms.GroupBox groupBox2;
-        private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog1;
-        private System.Windows.Forms.PictureBox pictureBox1;
-        private System.Windows.Forms.OpenFileDialog openFileDialog1;
-        private System.Windows.Forms.GroupBox groupBox4;
-        private System.Windows.Forms.Button btn_Load;
-        private System.Windows.Forms.Button btn_Writefile;
-        private System.Windows.Forms.Timer timer_cal;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Col14;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Col15;
     }
 }
 

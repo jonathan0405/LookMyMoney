@@ -99,6 +99,8 @@ namespace QuoteTest
                 DR["成交價位"] = e.matchPri;
                 DR["成交數量"] = e.matchQty;
                 DR["總成交量"] = e.tolMatchQty;
+                DR["買賣力道"] = stockForce[stockCode.IndexOf(e.symbol)];
+                DR["權重"] = stockWeight[stockCode.IndexOf(e.symbol)];
                 DR["買五"] = e.bestBuyPri +e.bestBuyQty ;
                 DR["賣五"] = e.bestSellPri+e.bestSellQty;
 
@@ -119,6 +121,8 @@ namespace QuoteTest
                 DR["成交價位"] = e.matchPri;
                 DR["成交數量"] = e.matchQty;
                 DR["總成交量"] = e.tolMatchQty;
+                DR["買賣力道"] = stockForce[stockCode.IndexOf(e.symbol)];
+                DR["權重"] = stockWeight[stockCode.IndexOf(e.symbol)];
                 DR["買五"] = e.bestBuyPri + e.bestBuyQty;
                 DR["賣五"] = e.bestSellPri + e.bestSellQty;
                 this.dt.Rows.Add(DR);
@@ -475,6 +479,8 @@ namespace QuoteTest
             DataColumn Col9 = new DataColumn("成交價位", System.Type.GetType("System.String"));
             DataColumn Col10 = new DataColumn("成交數量", System.Type.GetType("System.String"));
             DataColumn Col11 = new DataColumn("總成交量", System.Type.GetType("System.String"));
+            DataColumn Col14 = new DataColumn("買賣力道", System.Type.GetType("System.String"));
+            DataColumn Col15 = new DataColumn("權重", System.Type.GetType("System.String"));
             DataColumn Col12 = new DataColumn("買五", System.Type.GetType("System.String"));
             DataColumn Col13 = new DataColumn("賣五", System.Type.GetType("System.String"));
             this.dt.Columns.Add(Col0);
@@ -490,6 +496,8 @@ namespace QuoteTest
             this.dt.Columns.Add(Col11);
             this.dt.Columns.Add(Col12);
             this.dt.Columns.Add(Col13);
+            this.dt.Columns.Add(Col14);
+            this.dt.Columns.Add(Col15);
             this.dt.PrimaryKey = new DataColumn[] { this.dt.Columns["商品代碼"] };
             bindingSource1.DataSource = this.dt;
         }
@@ -647,6 +655,11 @@ namespace QuoteTest
                 stock.Remove(2);
                 Debug.WriteLine("line:" + stock[0]+stock[1]+stock.Count);
             }
+        }
+
+        private void bindingSource1_CurrentChanged(object sender, EventArgs e)
+        {
+
         }
 
         private void pictureBox1_Click(object sender, EventArgs e)
