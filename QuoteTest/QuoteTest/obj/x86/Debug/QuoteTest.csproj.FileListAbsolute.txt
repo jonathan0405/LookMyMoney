@@ -39,3 +39,9 @@ C:\Users\Jonathan\Documents\GitHub\LookMyMoney\QuoteTest\QuoteTest\obj\x86\Debug
 C:\Users\Jonathan\Documents\GitHub\LookMyMoney\QuoteTest\QuoteTest\bin\Debug\Database1.mdf
 C:\Users\Jonathan\Documents\GitHub\LookMyMoney\QuoteTest\QuoteTest\bin\Debug\Database1_log.ldf
 C:\Users\Jonathan\Documents\GitHub\LookMyMoney\QuoteTest\QuoteTest\bin\Debug\QuoteTest.exe.config
+C:\Yuanta\API\QuoteTest\QuoteTest\bin\Debug\QuoteTest.exe.config
+C:\Yuanta\API\QuoteTest\QuoteTest\obj\x86\Debug\Interop.YuantaQuoteLib.dll
+C:\Yuanta\API\QuoteTest\QuoteTest\obj\x86\Debug\AxInterop.YuantaQuoteLib.dll
+C:\Yuanta\API\QuoteTest\QuoteTest\obj\x86\Debug\QuoteTest.csproj.ResolveComReference.cache
+C:\Yuanta\API\QuoteTest\QuoteTest\obj\x86\Debug\QuoteTest.exe
+C:\Yuanta\API\QuoteTest\QuoteTest\obj\x86\Debug\QuoteTest.pdb
