@@ -67,14 +67,15 @@
             this.textBox_sym = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.axYuantaQuote1 = new AxYuantaQuoteLib.AxYuantaQuote();
             this.listBox1 = new System.Windows.Forms.ListBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.btn_sec_cover = new System.Windows.Forms.Button();
             this.btn_Writefile = new System.Windows.Forms.Button();
             this.btn_Load = new System.Windows.Forms.Button();
             this.button_sec = new System.Windows.Forms.Button();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.label9 = new System.Windows.Forms.Label();
+            this.axYuantaQuote1 = new AxYuantaQuoteLib.AxYuantaQuote();
             this.DataGrid = new System.Windows.Forms.DataGridView();
             this.key = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.RefPri = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -102,8 +103,8 @@
             this.groupBox3.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.panel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.axYuantaQuote1)).BeginInit();
             this.groupBox2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.axYuantaQuote1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.DataGrid)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).BeginInit();
             this.statusStrip1.SuspendLayout();
@@ -358,18 +359,6 @@
             this.panel1.Size = new System.Drawing.Size(1371, 344);
             this.panel1.TabIndex = 18;
             // 
-            // axYuantaQuote1
-            // 
-            this.axYuantaQuote1.Enabled = true;
-            this.axYuantaQuote1.Location = new System.Drawing.Point(944, 279);
-            this.axYuantaQuote1.Name = "axYuantaQuote1";
-            this.axYuantaQuote1.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("axYuantaQuote1.OcxState")));
-            this.axYuantaQuote1.Size = new System.Drawing.Size(63, 50);
-            this.axYuantaQuote1.TabIndex = 28;
-            this.axYuantaQuote1.OnMktStatusChange += new AxYuantaQuoteLib._DYuantaQuoteEvents_OnMktStatusChangeEventHandler(this.axYuantaQuote1_OnMktStatusChange);
-            this.axYuantaQuote1.OnRegError += new AxYuantaQuoteLib._DYuantaQuoteEvents_OnRegErrorEventHandler(this.axYuantaQuote1_OnRegError);
-            this.axYuantaQuote1.OnGetMktAll += new AxYuantaQuoteLib._DYuantaQuoteEvents_OnGetMktAllEventHandler(this.axYuantaQuote1_OnGetMktAll);
-            // 
             // listBox1
             // 
             this.listBox1.BackColor = System.Drawing.SystemColors.Control;
@@ -387,6 +376,7 @@
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.btn_sec_cover);
             this.groupBox2.Controls.Add(this.btn_Writefile);
             this.groupBox2.Controls.Add(this.btn_Load);
             this.groupBox2.Controls.Add(this.button_sec);
@@ -401,6 +391,16 @@
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "畫面設定";
             // 
+            // btn_sec_cover
+            // 
+            this.btn_sec_cover.Location = new System.Drawing.Point(262, 8);
+            this.btn_sec_cover.Name = "btn_sec_cover";
+            this.btn_sec_cover.Size = new System.Drawing.Size(88, 26);
+            this.btn_sec_cover.TabIndex = 28;
+            this.btn_sec_cover.Text = "買回賣回";
+            this.btn_sec_cover.UseVisualStyleBackColor = true;
+            this.btn_sec_cover.Click += new System.EventHandler(this.btn_sec_cover_Click);
+            // 
             // btn_Writefile
             // 
             this.btn_Writefile.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(6)))), ((int)(((byte)(70)))), ((int)(((byte)(128)))));
@@ -412,6 +412,7 @@
             this.btn_Writefile.TabIndex = 27;
             this.btn_Writefile.Text = "寫檔";
             this.btn_Writefile.UseVisualStyleBackColor = false;
+            this.btn_Writefile.Click += new System.EventHandler(this.btn_Writefile_Click_1);
             // 
             // btn_Load
             // 
@@ -435,8 +436,9 @@
             this.button_sec.Name = "button_sec";
             this.button_sec.Size = new System.Drawing.Size(79, 35);
             this.button_sec.TabIndex = 25;
-            this.button_sec.Text = "確認";
+            this.button_sec.Text = "買賣";
             this.button_sec.UseVisualStyleBackColor = false;
+            this.button_sec.Click += new System.EventHandler(this.button_sec_Click);
             // 
             // textBox1
             // 
@@ -460,6 +462,18 @@
             this.label9.Size = new System.Drawing.Size(105, 20);
             this.label9.TabIndex = 24;
             this.label9.Text = "計算區間秒數";
+            // 
+            // axYuantaQuote1
+            // 
+            this.axYuantaQuote1.Enabled = true;
+            this.axYuantaQuote1.Location = new System.Drawing.Point(944, 279);
+            this.axYuantaQuote1.Name = "axYuantaQuote1";
+            this.axYuantaQuote1.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("axYuantaQuote1.OcxState")));
+            this.axYuantaQuote1.Size = new System.Drawing.Size(63, 50);
+            this.axYuantaQuote1.TabIndex = 28;
+            this.axYuantaQuote1.OnMktStatusChange += new AxYuantaQuoteLib._DYuantaQuoteEvents_OnMktStatusChangeEventHandler(this.axYuantaQuote1_OnMktStatusChange);
+            this.axYuantaQuote1.OnRegError += new AxYuantaQuoteLib._DYuantaQuoteEvents_OnRegErrorEventHandler(this.axYuantaQuote1_OnRegError);
+            this.axYuantaQuote1.OnGetMktAll += new AxYuantaQuoteLib._DYuantaQuoteEvents_OnGetMktAllEventHandler(this.axYuantaQuote1_OnGetMktAll);
             // 
             // DataGrid
             // 
@@ -759,9 +773,9 @@
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.panel1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.axYuantaQuote1)).EndInit();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.axYuantaQuote1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.DataGrid)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).EndInit();
             this.statusStrip1.ResumeLayout(false);
@@ -826,6 +840,7 @@
         private System.Windows.Forms.ListBox listBox1;
         private System.Windows.Forms.PictureBox pictureBox1;
         private AxYuantaQuoteLib.AxYuantaQuote axYuantaQuote1;
+        private System.Windows.Forms.Button btn_sec_cover;
     }
 }
 

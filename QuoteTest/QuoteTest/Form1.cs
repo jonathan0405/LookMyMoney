@@ -16,7 +16,7 @@ using System.Globalization;
 
 namespace QuoteTest
 {
-    
+
     public partial class Form1 : Form
     {
         public DataTable dt;
@@ -43,9 +43,12 @@ namespace QuoteTest
         public static bool runK = false;
         //計算權重變數宣告
         public static int timeInterval = 2;
+        public static int btimeInterval = 1;
         public static int calInterval = 30;
         private static System.Timers.Timer aTimer30;
+        private static System.Timers.Timer bTimer;
         public static double WeightSum = 0;
+        public static double txfWeight = 0;
         //宣告K線計算開高低收成交
         List<double> popen = new List<double>();
         List<double> pclose = new List<double>();
@@ -60,7 +63,25 @@ namespace QuoteTest
         List<int> stockState = new List<int>();//使否計算力道
         List<int> stockLastAmount = new List<int>();//商品上次成交量
         List<List<int>> stockTimeForce = new List<List<int>>();//商品每秒力道
-        
+        //交易策略變數宣告
+        //TextBox:(1)台指期力道(2)權值股力道(3)買賣建議方向(4)目前手中持有台指期口數
+        //          (5)目前盈餘(6)初始投資金額(7)交易手續費(8)停利報酬(9)停損報酬
+        //          (10)策略一:買賣力道差距參數(11)策略二:買賣力道差距倍數參數
+        //          (12)策略一開關(13)策略二開關
+        public static int tradeDIR = 0;//買(1)or賣(-1)or不買賣(0)台指期(textbox)
+        public static int TXFamount = 0;//目前持有台指期口數(textbox)
+        public static double totalAward = 0;//目前交易盈餘(textbox)
+        List<double> TXFpriceP = new List<double>();//目前持有台指期多單價格表
+        List<double> TXFpriceN = new List<double>();//目前持有台指期空單價格表
+        public static double initMoney = 100000;//初始投資金額(textbox)
+        public static int strategy1_BuySellLength = 10;//權值股台指期買賣力道差距參數(textbox)
+        public static bool strategy1_autoTrade = true;//策略一自動交易(小button)
+        public static int strategy2_BuySellmultiply = 5;//權值股台指期買賣力道倍數參數(textbox)
+        public static bool strategy2_autoTrade = true;//策略二自動交易(小button)
+        public static int fee = 0;//交易手續費(textbox)
+        public static int award = 5;//想要停利的報酬(textbox)
+        public static int penalty = 10;//想要停損的金額點數(textbox)
+
         //連線Event OnMktStatusChange (int Status, char* Msg)	與行情發送端連線的狀態,回傳LinkStatus 
         private void axYuantaQuote1_OnMktStatusChange(object sender, AxYuantaQuoteLib._DYuantaQuoteEvents_OnMktStatusChangeEvent e)
         {
@@ -124,15 +145,28 @@ namespace QuoteTest
                 DR["賣五"] = e.bestSellPri + e.bestSellQty;
                 this.dt.Rows.Add(DR);
             }
-            ListShow(String.Format("{0} 買五：{1}-{2}", e.symbol, e.bestBuyPri, e.bestBuyQty));
-            ListShow(String.Format("{0} 賣五：{1}-{2}", e.symbol, e.bestSellPri, e.bestSellQty));
+            //ListShow(String.Format("{0}", e.symbol));
             //繪製台指期k線
             if (e.symbol == "TXFE7")
             {
-                cal_k(e);
-            }            
+                try
+                {
+                    cal_k(e);
+                }
+                catch(Exception ex)
+                {
+                    Debug.WriteLine(ex);
+                }                
+            }
             //計算力道
-            cal_force(e);
+            try
+            {
+                cal_force(e);
+            }
+            catch(Exception ex)
+            {
+                Debug.WriteLine(ex);
+            }            
         }
 
         public void cal_force(AxYuantaQuoteLib._DYuantaQuoteEvents_OnGetMktAllEvent e)
@@ -186,8 +220,7 @@ namespace QuoteTest
                 {
                     Debug.WriteLine("Data Error:" + ex);
                 }
-                
-            }  
+            }
         }
 
         public void cal_result(int seconds)
@@ -196,7 +229,7 @@ namespace QuoteTest
             //從現在秒數前一分鐘算起
             seconds = seconds - 1;
             //重置stockForce
-            for(int i = 0; i < stockTimeForce.Count; i++)
+            for (int i = 0; i < stockTimeForce.Count; i++)
             {
                 stockForce[i] = 0;
             }
@@ -219,7 +252,7 @@ namespace QuoteTest
                 }
                 else
                 {
-                    for (int j = seconds; j > seconds- calInterval; j--)
+                    for (int j = seconds; j > seconds - calInterval; j--)
                     {
                         stockForce[i] += stockTimeForce[i][j];
                     }
@@ -228,19 +261,19 @@ namespace QuoteTest
                 DR["買賣力道"] = stockForce[stockCode.IndexOf(stockCode[i])];
             }
             //計算權值股權重
-            WeightSum = 0;            
+            WeightSum = 0;
             for (int i = 1; i < stockCode.Count; i++)
             {
                 WeightSum += 0.01 * stockWeight[i] * stockForce[i];
             }
             //計算台指期權重
-            double txfWeight = 0;
-            txfWeight = 0.01* stockWeight[0] * stockForce[0];
+            txfWeight = 0;
+            txfWeight = 0.01 * stockWeight[0] * stockForce[0];
             //寫入檔案
             Debug.WriteLine("WeightSum:" + WeightSum);
             Debug.WriteLine("txfWeight:" + txfWeight);
             File.AppendAllText("D://log.txt", "\nTime:" + DateTime.Now.ToString("hh:mm:ss"));
-            File.AppendAllText("D://log.txt", "\nSum:"+WeightSum.ToString("F6"));
+            File.AppendAllText("D://log.txt", "\nSum:" + WeightSum.ToString("F6"));
             File.AppendAllText("D://log.txt", "\nTXF:" + txfWeight.ToString("F6"));
             File.AppendAllText("D://log.txt", "\nPrice:" + stockLastPrice[0].ToString("F6"));
         }
@@ -264,10 +297,10 @@ namespace QuoteTest
                     //初始化每一商品60秒鐘每一個值
                     stockTimeForce.Add(new List<int>());
                     for (int i = 0; i < 60; i++)
-                    {                      
+                    {
                         stockTimeForce[countStock].Add(0);
                     }
-                    countStock++;                    
+                    countStock++;
                 }
             }
         }
@@ -275,11 +308,11 @@ namespace QuoteTest
         public void load50stock()
         {
             for (int i = 0; i < stockCode.Count; i++)
-            {                
+            {
                 axYuantaQuote1.AddMktReg(stockCode[i], "4");
-            }            
+            }
         }
-        
+
         public void cal_k(AxYuantaQuoteLib._DYuantaQuoteEvents_OnGetMktAllEvent e)
         {
             double tmp = Convert.ToDouble(e.matchPri);
@@ -291,11 +324,11 @@ namespace QuoteTest
                 mlow = tmp;
                 mopen = tmp;
                 mclose = tmp;
-                minutes = e.matchTime.Substring(2, 2);                
+                minutes = e.matchTime.Substring(2, 2);
                 draw_k();
             }
             //判斷是否新的一分鐘
-            if (String.Compare(e.matchTime.Substring(2, 2),minutes,true)!=0)
+            if (String.Compare(e.matchTime.Substring(2, 2), minutes, true) != 0)
             {
                 mclose = lastprice;
                 /*TODO:開始畫圖*/
@@ -350,7 +383,7 @@ namespace QuoteTest
                 if (phigh[i] > max)
                 {
                     max = phigh[i];
-                }                    
+                }
             }
 
             for (int i = shift; i < plow.Count; i++)
@@ -358,27 +391,27 @@ namespace QuoteTest
                 if (plow[i] < min)
                 {
                     min = plow[i];
-                }                    
+                }
             }
             //繪製目前價格
-            for(int i = shift; i < popen.Count; i++)
+            for (int i = shift; i < popen.Count; i++)
             {
                 int kxWidth = 5;
                 kx = kx - kxWidth * scale;
                 double highy = (cs.Height / (max - min)) * (max - phigh[i]);
                 double lowy = (cs.Height / (max - min)) * (max - plow[i]);
                 double openy = (cs.Height / (max - min)) * (max - popen[i]);
-                double closey = (cs.Height / (max - min)) * (max - pclose[i]);                
+                double closey = (cs.Height / (max - min)) * (max - pclose[i]);
                 if (popen[i] > pclose[i])//跌
                 {
-                    Rectangle rect = new Rectangle(kx, (int)openy, kxWidth*2, (int)(closey - openy));
-                    g.DrawLine(penGreen2, kx+kxWidth, (float)highy, kx + kxWidth, (float)lowy);
+                    Rectangle rect = new Rectangle(kx, (int)openy, kxWidth * 2, (int)(closey - openy));
+                    g.DrawLine(penGreen2, kx + kxWidth, (float)highy, kx + kxWidth, (float)lowy);
                     g.DrawRectangle(penGreen1, rect);
                     g.FillRectangle(greenBrush, rect);
                 }
                 else//漲
                 {
-                    Rectangle rect = new Rectangle(kx, (int)closey, kxWidth*2, (int)(openy - closey));
+                    Rectangle rect = new Rectangle(kx, (int)closey, kxWidth * 2, (int)(openy - closey));
                     g.DrawLine(penRed2, kx + kxWidth, (float)highy, kx + kxWidth, (float)lowy);
                     g.DrawRectangle(penRed1, rect);
                     g.FillRectangle(redBrush, rect);
@@ -409,7 +442,7 @@ namespace QuoteTest
             try
             {
                 int RegErrCode = axYuantaQuote1.AddMktReg(textBox_sym.Text.Trim(), "4");
-                textBox_status2.Text = DateTime.Now.ToString("HH:mm:ss.fff ")+RegErrCode.ToString();
+                textBox_status2.Text = DateTime.Now.ToString("HH:mm:ss.fff ") + RegErrCode.ToString();
             }
             catch (Exception ex)
             {
@@ -478,12 +511,7 @@ namespace QuoteTest
             timer1.Enabled = false;
             LoginFn();
         }
-
-        private void statusStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
-        {
-            
-        }
-
+        
         private void statusStrip1_Click(object sender, EventArgs e)
         {
             panel1.Hide();
@@ -510,7 +538,7 @@ namespace QuoteTest
                         e.CellStyle.BackColor = Color.Green;
                     }
 
-                    if ((this.DataGrid.Columns["OpenPri"].Index == e.ColumnIndex && e.RowIndex >= 0)||(this.DataGrid.Columns["HighPri"].Index == e.ColumnIndex && e.RowIndex >= 0)|| (this.DataGrid.Columns["LowPri"].Index == e.ColumnIndex && e.RowIndex >= 0)|| (this.DataGrid.Columns["MatchPri"].Index == e.ColumnIndex && e.RowIndex >= 0))
+                    if ((this.DataGrid.Columns["OpenPri"].Index == e.ColumnIndex && e.RowIndex >= 0) || (this.DataGrid.Columns["HighPri"].Index == e.ColumnIndex && e.RowIndex >= 0) || (this.DataGrid.Columns["LowPri"].Index == e.ColumnIndex && e.RowIndex >= 0) || (this.DataGrid.Columns["MatchPri"].Index == e.ColumnIndex && e.RowIndex >= 0))
                     {
                         if (string.Compare(DataGrid.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString(), DataGrid.Rows[e.RowIndex].Cells[5].Value.ToString()) == 0)
                             e.CellStyle.BackColor = Color.Red;
@@ -522,12 +550,12 @@ namespace QuoteTest
                             e.CellStyle.ForeColor = Color.Lime;
                         else
                             e.CellStyle.ForeColor = Color.White;
-                    }                    
+                    }
                 }
             }
             catch (Exception ex)
             {
-                Debug.WriteLine("Error:"+ex);
+                Debug.WriteLine("Error:" + ex);
             }
         }
 
@@ -561,34 +589,16 @@ namespace QuoteTest
             });
         }
 
-        private void DataGrid_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-
-        }
-
-        private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void folderBrowserDialog1_HelpRequest(object sender, EventArgs e)
-        {
-
-        }
-        
-        private void btn_Load_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private void OnTimedEvent(Object source, System.Timers.ElapsedEventArgs e)
-        {            
+        {
+            //重啟自動策略
+            strategy1_autoTrade = true;
+            strategy2_autoTrade = true;
             //Console.WriteLine("The Elapsed event was raised at {0}", e.SignalTime);
-            int seconds = DateTime.Now.Second; 
+            int seconds = DateTime.Now.Second;
             //調整秒差     
             int calLowseconds = seconds - calInterval;
             int newcalseconds = 0;
-            File.AppendAllText("D://see.txt", calLowseconds + ":");
             if (calLowseconds < 0)
             {
                 newcalseconds = calLowseconds + 60;
@@ -617,8 +627,299 @@ namespace QuoteTest
                         }
                     }
                 }
+            }
+        }
+
+        private void OnTimedEventb(Object source, System.Timers.ElapsedEventArgs e)
+        {
+            //交易策略撰寫            
+            //textBox_status.Text = "初始計算策略";            
+            //策略一
+            //買賣力道不同向 開始買賣台指期            
+            //判斷是否滿足策略一條件
+            if (WeightSum * txfWeight < 0)
+            {
+                //判斷是否觸發策略一買賣力道差距條件
+                if (Math.Abs(WeightSum - txfWeight) > strategy1_BuySellLength)
+                {
+                    //判斷台指期交易方向
+                    if (WeightSum > txfWeight)
+                    {
+                        //買台指期
+                        tradeDIR = 1;
+                    }
+                    else if(WeightSum < txfWeight)
+                    {
+                        //賣台指期
+                        tradeDIR = -1;
+                    }
+                    //判斷是否設定自動交易
+                    if (strategy1_autoTrade)
+                    {
+                        //判斷是否超過投資預算
+                        if (initMoney < stockLastPrice[0])
+                        {
+                            textBox_status.Text = "你沒有錢 哈哈哈哈";
+                        }
+                        else
+                        {
+                            //執行本次交易
+                            tradeTXF();
+                            strategy1_autoTrade = false;
+                        }
+                    }
+                }
+                else
+                {
+                    //未觸發買賣條件 不買賣
+                    tradeDIR = 0;
+                }
+            }
+
+            //策略二
+            //買賣力道同向  計算出力道差距的倍率決定是否購買
+            if (WeightSum * txfWeight > 0)
+            {
+                //判斷是否觸發設定的倍率
+                if ((WeightSum / txfWeight) > strategy2_BuySellmultiply || (txfWeight / WeightSum) > strategy2_BuySellmultiply)
+                {
+                    if (WeightSum > txfWeight)
+                    {
+                        //買台指期
+                        tradeDIR = 1;
+                    }
+                    else if(WeightSum < txfWeight)
+                    {
+                        //賣台指期
+                        tradeDIR = -1;
+                    }
+                    //判斷是否設定自動交易
+                    if (strategy2_autoTrade)
+                    {
+                        //判斷是否超過投資預算
+                        if (initMoney < stockLastPrice[0])
+                        {
+                            textBox_status.Text = "你沒有錢 哈哈哈哈";
+                        }
+                        else
+                        {
+                            //執行本次交易
+                            tradeTXF();
+                            strategy2_autoTrade = false;
+                        }
+                    }
+                }
+                else
+                {
+                    //未觸發買賣條件 不買賣
+                    tradeDIR = 0;
+                }
+            }
+            stoploss();
+        }
+
+        public void stoploss()
+        {
+            //看一下之前賣空的台指期penalty
+            for (int i = 0; i < TXFpriceN.Count; i++)
+            {
+                if (TXFpriceN[i] - penalty > stockLastAmount[0])
+                {
+                    //忍痛買回來                    
+                    initMoney -= stockLastPrice[0];
+                    TXFamount++;
+                    TXFpriceN.RemoveAt(i);
+                    //計算本交易收益
+                    totalAward -= TXFpriceN[i] - stockLastPrice[0] + fee;
+                    ListShow("停損-忍痛買回來:賠" + (TXFpriceN[i] - stockLastPrice[0] + fee));
+                    //MessageBox.Show("停損-忍痛買回來:賠"+ (TXFpriceN[i] - stockLastPrice[0] + fee));
+                }
+            }
+            //看一下之前買多的台指期penalty
+            for (int i = 0; i < TXFpriceP.Count; i++)
+            {
+                if (TXFpriceP[i] + penalty < stockLastAmount[0])
+                {
+                    //忍痛賣出                    
+                    initMoney += stockLastPrice[0];
+                    TXFamount--;
+                    TXFpriceP.RemoveAt(i);
+                    //計算本交易收益
+                    totalAward -= TXFpriceN[i] - stockLastPrice[0] + fee;
+                    ListShow("停損-忍痛賣出:賠" + (TXFpriceN[i] - stockLastPrice[0] + fee));
+                    //MessageBox.Show("停損-忍痛賣出:賠" + (TXFpriceN[i] - stockLastPrice[0] + fee));
+                }
+            }
+        }
+
+        public void tradeTXF()
+        {
+            if (initMoney < stockLastPrice[0])
+            {
+                textBox_status.Text = "你沒有錢 哈哈哈哈";
+            }
+            else
+            {
+                if (tradeDIR == 1)
+                {
+                    //買台指期
+                    initMoney -= stockLastPrice[0];
+                    TXFamount++;
+                    TXFpriceP.Add(stockLastPrice[0]);
+                    ListShow("買進一口交易成功");
+                }
+                else if (tradeDIR == -1)
+                {
+                    //賣台指期
+                    initMoney += stockLastPrice[0];
+                    TXFamount--;
+                    TXFpriceN.Add(stockLastPrice[0]);
+                    ListShow("賣出一口交易成功");
+                }
+                else if (tradeDIR == 0)
+                {
+                    textBox_status.Text = "現在不是買賣的時候啦!!!";
+                }
+            }                
+        }
+
+        public void tradeTXFcover()
+        {
+            if (tradeDIR == 1)
+            {
+                for(int i = 0; i < TXFpriceN.Count; i++)
+                {
+                    if (TXFpriceN[i] + fee + award < stockLastAmount[0])
+                    {
+                        //買回台指期
+                        initMoney -= stockLastPrice[0];
+                        TXFamount++;
+                        TXFpriceN.RemoveAt(i);
+                        //計算本交易收益
+                        totalAward += TXFpriceN[i] - stockLastPrice[0] - fee;
+                        ListShow("買回一口成功-賺"+(TXFpriceN[i] - stockLastPrice[0] - fee));
+                    }
+                }
                 
             }
+            else if (tradeDIR == -1)
+            {
+                for (int i = 0; i < TXFpriceP.Count; i++)
+                {
+                    if (TXFpriceP[i] - fee - award > stockLastAmount[0])
+                    {
+                        //賣回台指期
+                        initMoney += stockLastPrice[0];
+                        TXFamount--;
+                        TXFpriceP.RemoveAt(i);
+                        //計算本交易收益
+                        totalAward += stockLastAmount[0] - TXFpriceP[i] - fee;
+                        ListShow("賣回一口成功-賺" + (stockLastAmount[0] - TXFpriceP[i] - fee));
+                    }
+                }
+                
+            }
+            else if (tradeDIR == 0)
+            {
+                textBox_status.Text = "現在不是出脫的時候啦!!!";
+            }
+        }
+
+        private void button_sec_Click(object sender, EventArgs e)
+        {
+            //執行交易
+            if (tradeDIR != 0)
+            {
+                tradeTXFcover();
+            }
+        }
+        
+        private void button_login_Click_1(object sender, EventArgs e)
+        {
+            LoginFn();
+            read50stock();
+        }
+
+        private void btn_Load_Click_1(object sender, EventArgs e)
+        {
+            try
+            {
+                calInterval = Int32.Parse(textBox1.Text.Trim());
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(DateTime.Now.ToString("HH:mm:ss.fff ") + "計算秒數請輸入0~59");
+                Debug.WriteLine("calInterval Input invalid:"+ex);
+                return;
+            }            
+            //設定個股買賣力道區間計算計時器
+            aTimer30 = new System.Timers.Timer(timeInterval * 1000);
+            aTimer30.Elapsed += OnTimedEvent;
+            aTimer30.AutoReset = true;
+            aTimer30.Enabled = true;
+            File.AppendAllText("D://log.txt", "\nStart Time:" + DateTime.Now.ToString("h:mm:ss "));
+            File.AppendAllText("D://tick.txt", "\nStart Time:" + DateTime.Now.ToString("h:mm:ss "));
+            load50stock();
+            //設定整體買賣力道計時器
+            bTimer = new System.Timers.Timer(btimeInterval * 1000);
+            bTimer.Elapsed += OnTimedEventb;
+            bTimer.AutoReset = true;
+            bTimer.Enabled = true;
+        }
+
+        private void btn_sec_cover_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button_sec_cover_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void statusStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        {
+
+        }
+
+        private void DataGrid_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void folderBrowserDialog1_HelpRequest(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btn_Load_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void pictureBox1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void groupBox1_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void comboBox_UpdateMode_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void toolStripStatusLabel3_Click(object sender, EventArgs e)
+        {
+
         }
 
         private void btn_Writefile_Click(object sender, EventArgs e)
@@ -641,6 +942,26 @@ namespace QuoteTest
 
         }
 
+        private void btn_Writefile_Click_1(object sender, EventArgs e)
+        {
+            strategy1_autoTrade = true;
+            strategy2_autoTrade = true;
+            List<double> test = new List<double>();
+            test.Add(11);
+            test.Add(12);
+            test.Add(13);
+            test.Add(12);
+            test.Add(15);
+            for(int i = 0; i < test.Count; i++)
+            {
+                test.Remove(3);
+                Debug.WriteLine(test[i]);
+                Debug.WriteLine(test.Count);
+            }
+            Debug.WriteLine(test[3]);
+
+        }
+
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
 
@@ -657,53 +978,6 @@ namespace QuoteTest
         }
 
         private void listBox1_SelectedIndexChanged_1(object sender, EventArgs e)
-        {
-
-        }
-
-        private void button_login_Click_1(object sender, EventArgs e)
-        {
-            LoginFn();
-            read50stock();
-        }
-
-        private void btn_Load_Click_1(object sender, EventArgs e)
-        {
-            try
-            {
-                calInterval = Int32.Parse(textBox1.Text.Trim());
-            }
-            catch(Exception ex)
-            {
-                MessageBox.Show(DateTime.Now.ToString("HH:mm:ss.fff ") + "計算秒數請輸入0~59");
-                Debug.WriteLine("calInterval Input invalid:"+ex);
-                return;
-            }            
-            aTimer30 = new System.Timers.Timer(timeInterval * 1000);
-            aTimer30.Elapsed += OnTimedEvent;
-            aTimer30.AutoReset = true;
-            aTimer30.Enabled = true;
-            File.AppendAllText("D://log.txt", "\nStart Time:" + DateTime.Now.ToString("h:mm:ss "));
-            File.AppendAllText("D://tick.txt", "\nStart Time:" + DateTime.Now.ToString("h:mm:ss "));
-            load50stock();
-        }
-
-        private void pictureBox1_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void groupBox1_Enter(object sender, EventArgs e)
-        {
-
-        }
-
-        private void comboBox_UpdateMode_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void toolStripStatusLabel3_Click(object sender, EventArgs e)
         {
 
         }
