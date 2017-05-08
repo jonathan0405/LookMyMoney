@@ -410,7 +410,7 @@
             this.btn_Writefile.Name = "btn_Writefile";
             this.btn_Writefile.Size = new System.Drawing.Size(143, 72);
             this.btn_Writefile.TabIndex = 27;
-            this.btn_Writefile.Text = "寫檔";
+            this.btn_Writefile.Text = "手動買賣";
             this.btn_Writefile.UseVisualStyleBackColor = false;
             this.btn_Writefile.Click += new System.EventHandler(this.btn_Writefile_Click_1);
             // 

@@ -64,17 +64,17 @@ namespace QuoteTest
         List<int> stockLastAmount = new List<int>();//商品上次成交量
         List<List<int>> stockTimeForce = new List<List<int>>();//商品每秒力道
         //交易策略變數宣告
-        //TextBox:(1)台指期力道(2)權值股力道(3)買賣建議方向(4)目前手中持有台指期口數
-        //          (5)目前盈餘(6)初始投資金額(7)交易手續費(8)停利報酬(9)停損報酬
-        //          (10)策略一:買賣力道差距參數(11)策略二:買賣力道差距倍數參數
-        //          (12)策略一開關(13)策略二開關
+        //TextBox:(1)台指期力道[Display,0](2)權值股力道[Display,0](3)買賣建議方向[Display](4)目前手中持有台指期口數[Display]
+        //          (5)目前盈餘[Display,0](6)初始投資金額[1~9999999,100000](7)交易手續費[0~9999999,0](8)停利報酬[0~9999999,5](9)停損報酬[0~9999999,10]
+        //          (10)策略一:買賣力道差距參數[0~500,20](11)策略二:買賣力道差距倍數參數[0~50,5]
+        //          (12)策略一開關["開"關](13)策略二開關["開"關](14)力道計算秒數[0~59,30](15)載入(16)手動買賣(17)空button*2
         public static int tradeDIR = 0;//買(1)or賣(-1)or不買賣(0)台指期(textbox)
         public static int TXFamount = 0;//目前持有台指期口數(textbox)
         public static double totalAward = 0;//目前交易盈餘(textbox)
         List<double> TXFpriceP = new List<double>();//目前持有台指期多單價格表
         List<double> TXFpriceN = new List<double>();//目前持有台指期空單價格表
         public static double initMoney = 100000;//初始投資金額(textbox)
-        public static int strategy1_BuySellLength = 10;//權值股台指期買賣力道差距參數(textbox)
+        public static int strategy1_BuySellLength = 20;//權值股台指期買賣力道差距參數(textbox)
         public static bool strategy1_autoTrade = true;//策略一自動交易(小button)
         public static int strategy2_BuySellmultiply = 5;//權值股台指期買賣力道倍數參數(textbox)
         public static bool strategy2_autoTrade = true;//策略二自動交易(小button)
@@ -147,7 +147,7 @@ namespace QuoteTest
             }
             //ListShow(String.Format("{0}", e.symbol));
             //繪製台指期k線
-            if (e.symbol == "TXFE7")
+            if (e.symbol == stockCode[0])
             {
                 try
                 {
@@ -591,7 +591,7 @@ namespace QuoteTest
 
         private void OnTimedEvent(Object source, System.Timers.ElapsedEventArgs e)
         {
-            //重啟自動策略
+            //30s自動重啟策略
             strategy1_autoTrade = true;
             strategy2_autoTrade = true;
             //Console.WriteLine("The Elapsed event was raised at {0}", e.SignalTime);
@@ -632,11 +632,10 @@ namespace QuoteTest
 
         private void OnTimedEventb(Object source, System.Timers.ElapsedEventArgs e)
         {
-            //交易策略撰寫            
-            //textBox_status.Text = "初始計算策略";            
+            //交易策略撰寫    
             //策略一
             //買賣力道不同向 開始買賣台指期            
-            //判斷是否滿足策略一條件
+            //判斷是否滿足策略一條件-力道反向
             if (WeightSum * txfWeight < 0)
             {
                 //判斷是否觸發策略一買賣力道差距條件
@@ -678,6 +677,7 @@ namespace QuoteTest
 
             //策略二
             //買賣力道同向  計算出力道差距的倍率決定是否購買
+            //買賣力道同向
             if (WeightSum * txfWeight > 0)
             {
                 //判斷是否觸發設定的倍率
@@ -720,34 +720,32 @@ namespace QuoteTest
 
         public void stoploss()
         {
-            //看一下之前賣空的台指期penalty
+            //看一下之前賣空的台指期 原本預期跌  結果一直漲
             for (int i = 0; i < TXFpriceN.Count; i++)
             {
-                if (TXFpriceN[i] - penalty > stockLastAmount[0])
+                if (stockLastPrice[0] - TXFpriceN[i] > penalty)
                 {
-                    //忍痛買回來                    
+                    //忍痛買回來      
+                    //計算本交易收益
+                    totalAward -= stockLastPrice[0] - TXFpriceN[i] + fee;
+                    ListShow("停損-買回一口:賠" + (stockLastPrice[0] - TXFpriceN[i] + fee));
                     initMoney -= stockLastPrice[0];
                     TXFamount++;
-                    TXFpriceN.RemoveAt(i);
-                    //計算本交易收益
-                    totalAward -= TXFpriceN[i] - stockLastPrice[0] + fee;
-                    ListShow("停損-忍痛買回來:賠" + (TXFpriceN[i] - stockLastPrice[0] + fee));
-                    //MessageBox.Show("停損-忍痛買回來:賠"+ (TXFpriceN[i] - stockLastPrice[0] + fee));
+                    TXFpriceN.RemoveAt(i);                    
                 }
             }
-            //看一下之前買多的台指期penalty
+            //看一下之前買多的台指期
             for (int i = 0; i < TXFpriceP.Count; i++)
             {
-                if (TXFpriceP[i] + penalty < stockLastAmount[0])
+                if (TXFpriceP[i] - stockLastPrice[0] > penalty)
                 {
-                    //忍痛賣出                    
-                    initMoney += stockLastPrice[0];
-                    TXFamount--;
-                    TXFpriceP.RemoveAt(i);
+                    //忍痛賣出                 
                     //計算本交易收益
                     totalAward -= TXFpriceN[i] - stockLastPrice[0] + fee;
-                    ListShow("停損-忍痛賣出:賠" + (TXFpriceN[i] - stockLastPrice[0] + fee));
-                    //MessageBox.Show("停損-忍痛賣出:賠" + (TXFpriceN[i] - stockLastPrice[0] + fee));
+                    ListShow("停損-賣出一口:賠" + (TXFpriceN[i] - stockLastPrice[0] + fee));
+                    initMoney += stockLastPrice[0];
+                    TXFamount--;
+                    TXFpriceP.RemoveAt(i);                    
                 }
             }
         }
@@ -766,7 +764,7 @@ namespace QuoteTest
                     initMoney -= stockLastPrice[0];
                     TXFamount++;
                     TXFpriceP.Add(stockLastPrice[0]);
-                    ListShow("買進一口交易成功");
+                    ListShow("多單買進一口-成功@"+ stockLastPrice[0]);
                 }
                 else if (tradeDIR == -1)
                 {
@@ -774,7 +772,7 @@ namespace QuoteTest
                     initMoney += stockLastPrice[0];
                     TXFamount--;
                     TXFpriceN.Add(stockLastPrice[0]);
-                    ListShow("賣出一口交易成功");
+                    ListShow("空單賣出一口-成功@" + stockLastPrice[0]);
                 }
                 else if (tradeDIR == 0)
                 {
@@ -785,41 +783,33 @@ namespace QuoteTest
 
         public void tradeTXFcover()
         {
-            if (tradeDIR == 1)
+            for (int i = 0; i < TXFpriceN.Count; i++)
             {
-                for(int i = 0; i < TXFpriceN.Count; i++)
+                if (TXFpriceN[i] - stockLastAmount[0] > fee + award)
                 {
-                    if (TXFpriceN[i] + fee + award < stockLastAmount[0])
-                    {
-                        //買回台指期
-                        initMoney -= stockLastPrice[0];
-                        TXFamount++;
-                        TXFpriceN.RemoveAt(i);
-                        //計算本交易收益
-                        totalAward += TXFpriceN[i] - stockLastPrice[0] - fee;
-                        ListShow("買回一口成功-賺"+(TXFpriceN[i] - stockLastPrice[0] - fee));
-                    }
+                    //買回台指期
+                    //計算本交易收益
+                    totalAward += TXFpriceN[i] - stockLastPrice[0] - fee;
+                    ListShow("買回一口-成功賺@" + (TXFpriceN[i] - stockLastPrice[0] - fee)+"賣價@"+ TXFpriceN[i]+"買價@"+ stockLastPrice[0]);
+                    initMoney -= stockLastPrice[0];
+                    TXFamount++;
+                    TXFpriceN.RemoveAt(i);                    
                 }
-                
             }
-            else if (tradeDIR == -1)
+            for (int i = 0; i < TXFpriceP.Count; i++)
             {
-                for (int i = 0; i < TXFpriceP.Count; i++)
+                if (stockLastAmount[0] - TXFpriceP[i] > fee + award)
                 {
-                    if (TXFpriceP[i] - fee - award > stockLastAmount[0])
-                    {
-                        //賣回台指期
-                        initMoney += stockLastPrice[0];
-                        TXFamount--;
-                        TXFpriceP.RemoveAt(i);
-                        //計算本交易收益
-                        totalAward += stockLastAmount[0] - TXFpriceP[i] - fee;
-                        ListShow("賣回一口成功-賺" + (stockLastAmount[0] - TXFpriceP[i] - fee));
-                    }
+                    //賣回台指期
+                    //計算本交易收益
+                    totalAward += stockLastAmount[0] - TXFpriceP[i] - fee;
+                    ListShow("賣回一口-成功賺@" + (stockLastAmount[0] - TXFpriceP[i] - fee) + "賣價@" + stockLastPrice[0] + "買價@" + TXFpriceP[i]);
+                    initMoney += stockLastPrice[0];
+                    TXFamount--;
+                    TXFpriceP.RemoveAt(i);                    
                 }
-                
             }
-            else if (tradeDIR == 0)
+            if (tradeDIR == 0)
             {
                 textBox_status.Text = "現在不是出脫的時候啦!!!";
             }
@@ -836,14 +826,16 @@ namespace QuoteTest
         
         private void button_login_Click_1(object sender, EventArgs e)
         {
+            //登入後讀取50檔權值股
             LoginFn();
             read50stock();
         }
-
+        
         private void btn_Load_Click_1(object sender, EventArgs e)
         {
             try
             {
+                //讀取計算權重週期秒數
                 calInterval = Int32.Parse(textBox1.Text.Trim());
             }
             catch(Exception ex)
@@ -851,14 +843,16 @@ namespace QuoteTest
                 MessageBox.Show(DateTime.Now.ToString("HH:mm:ss.fff ") + "計算秒數請輸入0~59");
                 Debug.WriteLine("calInterval Input invalid:"+ex);
                 return;
-            }            
+            }
+            //寫入開始時間
+            File.AppendAllText("D://log.txt", "\nStart Time:" + DateTime.Now.ToString("h:mm:ss "));
+            File.AppendAllText("D://tick.txt", "\nStart Time:" + DateTime.Now.ToString("h:mm:ss "));
             //設定個股買賣力道區間計算計時器
             aTimer30 = new System.Timers.Timer(timeInterval * 1000);
             aTimer30.Elapsed += OnTimedEvent;
             aTimer30.AutoReset = true;
             aTimer30.Enabled = true;
-            File.AppendAllText("D://log.txt", "\nStart Time:" + DateTime.Now.ToString("h:mm:ss "));
-            File.AppendAllText("D://tick.txt", "\nStart Time:" + DateTime.Now.ToString("h:mm:ss "));
+            //登陸50檔權值股資料            
             load50stock();
             //設定整體買賣力道計時器
             bTimer = new System.Timers.Timer(btimeInterval * 1000);
@@ -944,8 +938,7 @@ namespace QuoteTest
 
         private void btn_Writefile_Click_1(object sender, EventArgs e)
         {
-            strategy1_autoTrade = true;
-            strategy2_autoTrade = true;
+            tradeTXF();
             List<double> test = new List<double>();
             test.Add(11);
             test.Add(12);
