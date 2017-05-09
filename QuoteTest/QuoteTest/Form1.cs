@@ -299,7 +299,7 @@ namespace QuoteTest
                     stockTimeForce.Add(new List<int>());
                     for (int i = 0; i < 60; i++)
                     {
-                        stockTimeForce[countStock].Add(0);
+                        stockTimeForce[countStock].Add(0);                        
                     }
                     countStock++;
                 }
@@ -637,6 +637,7 @@ namespace QuoteTest
             //策略一
             //買賣力道不同向 開始買賣台指期            
             //判斷是否滿足策略一條件-力道反向
+            Debug.WriteLine("OnTimedEventb");
             if (WeightSum * txfWeight < 0)
             {
                 //判斷是否觸發策略一買賣力道差距條件
@@ -838,7 +839,7 @@ namespace QuoteTest
             try
             {
                 //讀取計算權重週期秒數
-                calInterval = Int32.Parse(textBox_sec1.Text.Trim());
+                calInterval = Int32.Parse(textBox_sec1.Text.Trim());                
             }
             catch(Exception ex)
             {
@@ -969,6 +970,31 @@ namespace QuoteTest
         private void textBox1_TextChanged_1(object sender, EventArgs e)
         {
 
+        }
+
+        private void listBox1_SelectedIndexChanged_2(object sender, EventArgs e)
+        {
+
+        }
+
+        private void axYuantaQuote1_OnMktStatusChange_1(object sender, AxYuantaQuoteLib._DYuantaQuoteEvents_OnMktStatusChangeEvent e)
+        {
+            textBox_status.Text = DateTime.Now.ToString("HH:mm:ss.fff ") + e.msg.ToString();
+            if (e.msg.ToString().IndexOf("行情連線結束") >= 0)
+            {
+                //隔幾秒再連線
+                textBox_status.Text = DateTime.Now.ToString("HH:mm:ss.fff ") + "行情連線結束，隔5秒重新連線";
+                MessageBox.Show(DateTime.Now.ToString("HH:mm:ss.fff ") + "行情連線結束，隔5秒重新連線");
+                timer1.Enabled = true;
+            }
+            else if (e.msg.ToString().IndexOf("行情連線失敗") >= 0)
+            {
+                //隔幾秒再連線
+                //可能網路不通
+                textBox_status.Text = DateTime.Now.ToString("HH:mm:ss.fff ") + "行情連線失敗，隔5秒重新連線";
+                MessageBox.Show(DateTime.Now.ToString("HH:mm:ss.fff ") + "行情連線失敗，隔5秒重新連線");
+                timer1.Enabled = true;
+            }
         }
 
         private void textBox1_TextChanged(object sender, EventArgs e)
