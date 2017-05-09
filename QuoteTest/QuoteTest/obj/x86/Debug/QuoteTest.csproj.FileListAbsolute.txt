@@ -45,3 +45,13 @@ C:\Yuanta\API\QuoteTest\QuoteTest\obj\x86\Debug\AxInterop.YuantaQuoteLib.dll
 C:\Yuanta\API\QuoteTest\QuoteTest\obj\x86\Debug\QuoteTest.csproj.ResolveComReference.cache
 C:\Yuanta\API\QuoteTest\QuoteTest\obj\x86\Debug\QuoteTest.exe
 C:\Yuanta\API\QuoteTest\QuoteTest\obj\x86\Debug\QuoteTest.pdb
+C:\Yuanta\API\QuoteTest\QuoteTest\obj\x86\Debug\QuoteTest.csprojResolveAssemblyReference.cache
+C:\Yuanta\API\QuoteTest\QuoteTest\obj\x86\Debug\QuoteTest.Form1.resources
+C:\Yuanta\API\QuoteTest\QuoteTest\obj\x86\Debug\QuoteTest.Properties.Resources.resources
+C:\Yuanta\API\QuoteTest\QuoteTest\obj\x86\Debug\QuoteTest.csproj.GenerateResource.Cache
+C:\Yuanta\API\QuoteTest\QuoteTest\bin\Debug\Database1.mdf
+C:\Yuanta\API\QuoteTest\QuoteTest\bin\Debug\Database1_log.ldf
+C:\Yuanta\API\QuoteTest\QuoteTest\bin\Debug\QuoteTest.exe
+C:\Yuanta\API\QuoteTest\QuoteTest\bin\Debug\QuoteTest.pdb
+C:\Yuanta\API\QuoteTest\QuoteTest\bin\Debug\Interop.YuantaQuoteLib.dll
+C:\Yuanta\API\QuoteTest\QuoteTest\bin\Debug\AxInterop.YuantaQuoteLib.dll

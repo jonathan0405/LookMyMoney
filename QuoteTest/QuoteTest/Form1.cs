@@ -63,11 +63,12 @@ namespace QuoteTest
         List<int> stockState = new List<int>();//使否計算力道
         List<int> stockLastAmount = new List<int>();//商品上次成交量
         List<List<int>> stockTimeForce = new List<List<int>>();//商品每秒力道
-        //交易策略變數宣告
-        //TextBox:(1)台指期力道[Display,0](2)權值股力道[Display,0](3)買賣建議方向[Display](4)目前手中持有台指期口數[Display]
-        //          (5)目前盈餘[Display,0](6)初始投資金額[1~9999999,100000](7)交易手續費[0~9999999,0](8)停利報酬[0~9999999,5](9)停損報酬[0~9999999,10]
-        //          (10)策略一:買賣力道差距參數[0~500,20](11)策略二:買賣力道差距倍數參數[0~50,5]
-        //          (12)策略一開關["開"關](13)策略二開關["開"關](14)力道計算秒數[0~59,30](15)載入(16)手動買賣(17)空button*2
+                                                               //交易策略變數宣告
+                                                               //TextBox:(1)台指期力道[Display,0](2)權值股力道[Display,0](3)買賣建議方向[Display](4)目前手中持有台指期口數[Display]
+                                                               //          (5)目前盈餘[Display,0](6)初始投資金額[1~9999999,100000](7)交易手續費[0~9999999,0](8)停利報酬[0~9999999,5](9)停損報酬[0~9999999,10]
+                                                               //          (10)策略一:買賣力道差距參數[0~500,20](11)策略二:買賣力道差距倍數參數[0~50,5]
+                                                               //          (12)策略一開關["開"關](13)策略二開關["開"關](14)力道計算秒數[0~59,30](15)載入(16)手動買賣(17)空button*2
+                                                               //(18)交易間隔秒數[0~59,5]
         public static int tradeDIR = 0;//買(1)or賣(-1)or不買賣(0)台指期(textbox)
         public static int TXFamount = 0;//目前持有台指期口數(textbox)
         public static double totalAward = 0;//目前交易盈餘(textbox)
@@ -441,8 +442,8 @@ namespace QuoteTest
         {
             try
             {
-                int RegErrCode = axYuantaQuote1.AddMktReg(textBox_sym.Text.Trim(), "4");
-                textBox_status2.Text = DateTime.Now.ToString("HH:mm:ss.fff ") + RegErrCode.ToString();
+               // int RegErrCode = axYuantaQuote1.AddMktReg(textBox_sym.Text.Trim(), "4");
+                //textBox_status2.Text = DateTime.Now.ToString("HH:mm:ss.fff ") + RegErrCode.ToString();
             }
             catch (Exception ex)
             {
@@ -454,8 +455,8 @@ namespace QuoteTest
         {
             try
             {
-                int RegErrCode = axYuantaQuote1.DelMktReg(textBox_sym.Text.Trim());
-                textBox_status2.Text = RegErrCode.ToString();
+                //int RegErrCode = axYuantaQuote1.DelMktReg(textBox_sym.Text.Trim());
+               // textBox_status2.Text = RegErrCode.ToString();
             }
             catch (Exception ex)
             {
@@ -566,7 +567,7 @@ namespace QuoteTest
 
         private void textBox_sym_Click(object sender, EventArgs e)
         {
-            textBox_sym.SelectAll();
+            //textBox_sym.SelectAll();
         }
 
         private delegate void InvokeFunction(string msg);
@@ -837,7 +838,7 @@ namespace QuoteTest
             try
             {
                 //讀取計算權重週期秒數
-                calInterval = Int32.Parse(textBox1.Text.Trim());
+                calInterval = Int32.Parse(textBox_sec1.Text.Trim());
             }
             catch(Exception ex)
             {
@@ -953,6 +954,21 @@ namespace QuoteTest
                 Debug.WriteLine(test.Count);
             }
             Debug.WriteLine(test[3]);
+        }
+
+        private void groupBox2_Enter_1(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label9_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void textBox1_TextChanged_1(object sender, EventArgs e)
+        {
+
         }
 
         private void textBox1_TextChanged(object sender, EventArgs e)
